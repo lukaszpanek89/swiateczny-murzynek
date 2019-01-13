@@ -1,5 +1,4 @@
-// TODO: swiateczny.murzynek
-package com.lpanek.dev.softwareplant.bractwo.architektoniczne.domain;
+package com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain;
 
 public class Kucharz {
 
@@ -168,23 +167,23 @@ public class Kucharz {
 	// --- DOTAD ---
 
 	private Skladnik znajdzSkladnikLubZglosBrak(Kuchnia kuchnia, SpecyfikacjaSkladnika specyfikacjaSkladnika) {
-		return null;
+		return new Skladnik();
 	}
 
 	private SprzetKuchenny znajdzSprzetKuchennyLubZglosBrak(Kuchnia kuchnia, SpecyfikacjaSprzetuKuchennego specyfikacjaSprzetu) {
-		return null;
+		return new SprzetKuchenny();
 	}
 
 	private SpecyfikacjaSprzetuKuchennego specyfikacjaGarnkaDoMieszaniaSkladnikow() {
-		return null;
+		return new SpecyfikacjaSprzetuKuchennego();
 	}
 
 	private SpecyfikacjaSprzetuKuchennego specyfikacjaNozaDoPokrojeniaMurzynkaWBlaszce() {
-		return null;
+		return new SpecyfikacjaSprzetuKuchennego();
 	}
 
 	private SpecyfikacjaSprzetuKuchennego specyfikacjaLopatkiDoWyjeciaMurzynkaZBlaszki() {
-		return null;
+		return new SpecyfikacjaSprzetuKuchennego();
 	}
 
 	private void dodajSkladnikDoGarnka(Skladnik skladnik, SprzetKuchenny garnek, SprzetyKuchenne sprzetyKuchenne, PrzepisNaMurzynka przepis) {
@@ -192,7 +191,7 @@ public class Kucharz {
 	}
 
 	private SprzetKuchenny wezSprzetDoMieszania(SprzetyKuchenne sprzetyKuchenne, SpecyfikacjaSprzetuKuchennego specyfikacjaSprzetuDoMieszania) {
-		return null;
+		return new SprzetKuchenny();
 	}
 
 	private void zamieszajZawartoscGarnka(SprzetKuchenny garnek, SprzetKuchenny sprzetDoMieszania, SprzetyKuchenne sprzetyKuchenne) {
@@ -257,7 +256,7 @@ public class Kucharz {
 	}
 
 	private boolean murzynekJestDopieczony(SprzetKuchenny piekarnik) {
-		return false;
+		return true;
 	}
 
 	private boolean murzynekJestNiedopieczony(SprzetKuchenny piekarnik) {
@@ -285,6 +284,6 @@ public class Kucharz {
 	}
 
 	private Murzynek wyjmijMurzynkaZBlaszki(SprzetKuchenny blaszka, SprzetKuchenny lopatka) {
-		return null;
+		return new Murzynek();
 	}
 }

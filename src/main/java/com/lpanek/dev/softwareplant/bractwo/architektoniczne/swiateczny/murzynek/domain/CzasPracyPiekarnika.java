@@ -1,4 +1,4 @@
-package com.lpanek.dev.softwareplant.bractwo.architektoniczne.domain;
+package com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain;
 
 class CzasPracyPiekarnika {
 

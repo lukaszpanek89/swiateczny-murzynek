@@ -1,26 +1,27 @@
-package com.lpanek.dev.softwareplant.bractwo.architektoniczne.domain;
+package com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class PrzepisNaMurzynka {
 
 	Set<SpecyfikacjaSkladnika> potrzebneSkladniki() {
-		return null;
+		return new HashSet<SpecyfikacjaSkladnika>();
 	}
 
 	Set<SpecyfikacjaSprzetuKuchennego> potrzebneSprzetyKuchenne() {
-		return null;
+		return new HashSet<SpecyfikacjaSprzetuKuchennego>();
 	}
 
 	SpecyfikacjaMieszaniaSkladnikow specyfikacjaMieszaniaSkladnikow() {
-		return null;
+		return new SpecyfikacjaMieszaniaSkladnikow();
 	}
 
 	SpecyfikacjaPrzygotowaniaBlaszki specyfikacjaPrzygotowaniaBlaszki() {
-		return null;
+		return new SpecyfikacjaPrzygotowaniaBlaszki();
 	}
 
 	SpecyfikacjaUstawienPiekarnika specyfikacjaUstawienPiekarnika() {
-		return null;
+		return new SpecyfikacjaUstawienPiekarnika();
 	}
 }
