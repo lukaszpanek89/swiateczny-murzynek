@@ -1,6 +1,7 @@
 package com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain;
 
 import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.kuchnia.CzasPracyPiekarnika;
+import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.kuchnia.IdSprzetuKuchennego;
 import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.kuchnia.Kuchnia;
 import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.kuchnia.Skladnik;
 import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.kuchnia.Skladniki;
@@ -8,6 +9,7 @@ import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek
 import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.kuchnia.SprzetyKuchenne;
 import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.kuchnia.TemperaturaPiekarnika;
 import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.kuchnia.TrybPracyPiekarnika;
+import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.kuchnia.TypSprzetuKuchennego;
 import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.przepis.PrzepisNaMurzynka;
 import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.przepis.SpecyfikacjaPrzygotowaniaBlaszki;
 import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.przepis.SpecyfikacjaSkladnika;
@@ -15,6 +17,16 @@ import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek
 import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.przepis.SpecyfikacjaUstawienPiekarnika;
 
 public class Kucharz {
+
+	private static final IdSprzetuKuchennego ID_GARNKA_DO_CIASTA = new IdSprzetuKuchennego("Garnek do przygotowania ciasta");
+
+	private static final IdSprzetuKuchennego ID_WYKALACZEK_DO_MURZYNKA = new IdSprzetuKuchennego("Wykalaczki do sprawdzenia upieczenia murzynka");
+
+	private static final IdSprzetuKuchennego ID_NOZA_DO_MURZYNKA = new IdSprzetuKuchennego("Noz do pokrojenia murzynka");
+
+	private static final IdSprzetuKuchennego ID_LOPATKI_DO_MURZYNKA = new IdSprzetuKuchennego("Lopatka do wyjecia murzynka");
+
+	private static final IdSprzetuKuchennego ID_PATERY_DO_MURZYNKA = new IdSprzetuKuchennego("Patera do murzynka");
 
 	private final Kuchnia kuchnia;
 
@@ -65,24 +77,23 @@ public class Kucharz {
 			sprzetyKuchenne.dodaj(sprzet);
 		}
 
-		// TODO: Zapakowac w metody pomocnicze?
-		SpecyfikacjaSprzetuKuchennego specyfikacjaGarnka = specyfikacjaGarnkaDoPrzygotowaniaCiasta();
+		SpecyfikacjaSprzetuKuchennego specyfikacjaGarnka = specyfikacjaGarnkaDoCiasta();
 		SprzetKuchenny garnek = znajdzWKuchniSprzetKuchennyLubZglosBrak(specyfikacjaGarnka);
 		sprzetyKuchenne.dodaj(garnek);
 
-		SpecyfikacjaSprzetuKuchennego specyfikacjaWykalaczek = specyfikacjaWykalaczek();
+		SpecyfikacjaSprzetuKuchennego specyfikacjaWykalaczek = specyfikacjaWykalaczekDoMurzynka();
 		SprzetKuchenny wykalaczki = znajdzWKuchniSprzetKuchennyLubZglosBrak(specyfikacjaWykalaczek);
 		sprzetyKuchenne.dodaj(wykalaczki);
 
-		SpecyfikacjaSprzetuKuchennego specyfikacjaNoza = specyfikacjaNozaDoPokrojeniaMurzynkaWBlaszce();
+		SpecyfikacjaSprzetuKuchennego specyfikacjaNoza = specyfikacjaNozaDoMurzynka();
 		SprzetKuchenny noz = znajdzWKuchniSprzetKuchennyLubZglosBrak(specyfikacjaNoza);
 		sprzetyKuchenne.dodaj(noz);
 
-		SpecyfikacjaSprzetuKuchennego specyfikacjaLopatki = specyfikacjaLopatkiDoWyjeciaMurzynkaZBlaszki();
+		SpecyfikacjaSprzetuKuchennego specyfikacjaLopatki = specyfikacjaLopatkiDoWyjeciaMurzynka();
 		SprzetKuchenny lopatka = znajdzWKuchniSprzetKuchennyLubZglosBrak(specyfikacjaLopatki);
 		sprzetyKuchenne.dodaj(lopatka);
 
-		SpecyfikacjaSprzetuKuchennego specyfikacjaPatery = specyfikacjaPateryPodMurzynka();
+		SpecyfikacjaSprzetuKuchennego specyfikacjaPatery = specyfikacjaPateryDoMurzynka();
 		SprzetKuchenny patera = znajdzWKuchniSprzetKuchennyLubZglosBrak(specyfikacjaPatery);
 		sprzetyKuchenne.dodaj(patera);
 
@@ -90,16 +101,13 @@ public class Kucharz {
 	}
 
 	private SprzetKuchenny wezGarnek() {
-		return null;
+		return sprzetyKuchenne.wez(ID_GARNKA_DO_CIASTA);
 	}
 
 	private void dodajSkladnikiDoGarnka(SprzetKuchenny garnek) {
 		for (SpecyfikacjaSkladnika specyfikacjaSkladnika : przepis.skladnikiPotrzebneDoPrzygotowaniaCiasta()) {
-
-		}
-		// TODO: Do poprawy
-		for (Skladnik skladnik : skladniki) {
-			dodajSkladnikDoGarnka(skladnik, garnek);
+			Skladnik odmierzonySkladnik = odmierzPorcjeSkladnikaDoDodania(specyfikacjaSkladnika);
+			dodajSkladnikDoGarnka(odmierzonySkladnik, garnek);
 		}
 	}
 
@@ -108,10 +116,12 @@ public class Kucharz {
 		do {
 			zamieszajCiastoWGarnku(garnek, lyzka);
 		} while (ciastoWymagaDalszegoMieszania(garnek));
+		sprzetyKuchenne.zwroc(lyzka);
 	}
 
 	private SprzetKuchenny wezBlaszke() {
-		return null;
+		SpecyfikacjaSprzetuKuchennego specyfikacjaBlaszki = przepis.specyfikacjaPrzygotowaniaBlaszki().specyfikacjaBlaszki();
+		return sprzetyKuchenne.wez(specyfikacjaBlaszki.id());
 	}
 
 	private void przygotujBlaszkePodMurzynka(SprzetKuchenny blaszka) {
@@ -125,35 +135,35 @@ public class Kucharz {
 
 	private void nastawPiekarnikZMinimalnymCzasemPieczenia() {
 		SpecyfikacjaUstawienPiekarnika specyfikacjaPiekarnika = przepis.specyfikacjaUstawienPiekarnika();
-		SprzetKuchenny piekarnik = sprzetyKuchenne.piekarnik();
+		SprzetKuchenny piekarnik = przejdzDoPiekarnika();
 		nastawTemperaturePiekarnika(piekarnik, specyfikacjaPiekarnika.temperatura());
 		nastawTrybPracyPiekarnika(piekarnik, TrybPracyPiekarnika.GORA_DOL);
 		nastawCzasPieczeniaPiekarnika(piekarnik, specyfikacjaPiekarnika.minimalnyCzasPieczenia());
 	}
 
 	private void zaczekajNaNagrzaniePiekarnika() {
-		SprzetKuchenny piekarnik = sprzetyKuchenne.piekarnik();
+		SprzetKuchenny piekarnik = przejdzDoPiekarnika();
 		while (piekarnikNagrzewaSie(piekarnik)) {
 			czekajPrzezMinute();
 		}
 	}
 
 	private void wstawBlaszkeDoPiekarnika(SprzetKuchenny blaszka) {
-		SprzetKuchenny piekarnik = sprzetyKuchenne.piekarnik();
+		SprzetKuchenny piekarnik = przejdzDoPiekarnika();
 		otworzPiekarnik(piekarnik);
 		wstawBlaszkeDoOtwartegoPiekarnika(blaszka, piekarnik);
 		zamknijPiekarnik(piekarnik);
 	}
 
 	private void zaczekajNaSkonczeniePieczenia() {
-		SprzetKuchenny piekarnik = sprzetyKuchenne.piekarnik();
+		SprzetKuchenny piekarnik = przejdzDoPiekarnika();
 		while (czasPieczeniaNieUplynal(piekarnik)) {
 			czekajPrzezMinute();
 		}
 	}
 
 	private void dopieczMurzynkaJesliPotrzeba() {
-		SprzetKuchenny piekarnik = sprzetyKuchenne.piekarnik();
+		SprzetKuchenny piekarnik = przejdzDoPiekarnika();
 		if (murzynekJestDopieczony(piekarnik)) {
 			return;
 		}
@@ -167,7 +177,7 @@ public class Kucharz {
 	}
 
 	private SprzetKuchenny wyjmijBlaszkeZPiekarnika() {
-		SprzetKuchenny piekarnik = sprzetyKuchenne.piekarnik();
+		SprzetKuchenny piekarnik = przejdzDoPiekarnika();
 		otworzPiekarnik(piekarnik);
 		SprzetKuchenny blaszka = wyjmijBlaszkeZOtwartegoPiekarnika(piekarnik);
 		zamknijPiekarnik(piekarnik);
@@ -175,7 +185,7 @@ public class Kucharz {
 	}
 
 	private void wylaczPiekarnik() {
-		SprzetKuchenny piekarnik = sprzetyKuchenne.piekarnik();
+		SprzetKuchenny piekarnik = przejdzDoPiekarnika();
 		nastawTemperaturePiekarnika(piekarnik, TemperaturaPiekarnika.ZERO);
 		nastawTrybPracyPiekarnika(piekarnik, TrybPracyPiekarnika.WYLACZONY);
 		nastawCzasPieczeniaPiekarnika(piekarnik, CzasPracyPiekarnika.ZERO);
@@ -188,43 +198,52 @@ public class Kucharz {
 	}
 
 	private MurzynekNaPaterze przelozMurzynkaZBlaszkiNaPatere(SprzetKuchenny blaszka) {
-		SprzetKuchenny noz = sprzetyKuchenne.noz();
-		SprzetKuchenny lopatka = sprzetyKuchenne.lopatka();
-		SprzetKuchenny patera = sprzetyKuchenne.patera();
-
+		SprzetKuchenny noz = sprzetyKuchenne.wez(ID_NOZA_DO_MURZYNKA);
+		SprzetKuchenny lopatka = sprzetyKuchenne.wez(ID_LOPATKI_DO_MURZYNKA);
+		SprzetKuchenny patera = sprzetyKuchenne.wez(ID_PATERY_DO_MURZYNKA);
 		pokrojMurzynkaNaKawalki(blaszka, noz);
 		MurzynekNaPaterze murzynekNaPaterze = przelozKawalkiMurzynkaNaPatere(blaszka, patera, lopatka);
+		sprzetyKuchenne.zwroc(noz);
+		sprzetyKuchenne.zwroc(lopatka);
+		sprzetyKuchenne.zwroc(patera);
 		return murzynekNaPaterze;
 	}
 
 	// --- DOTAD ---
 
 	private Skladnik znajdzWKuchniSkladnikLubZglosBrak(SpecyfikacjaSkladnika specyfikacjaSkladnika) {
-		return new Skladnik();
+		return new Skladnik(); // TODO: Znaleźć składnik w kuchni
 	}
 
 	private SprzetKuchenny znajdzWKuchniSprzetKuchennyLubZglosBrak(SpecyfikacjaSprzetuKuchennego specyfikacjaSprzetu) {
-		return new SprzetKuchenny();
+		return new SprzetKuchenny(); // TODO: Znaleźć sprzęt w kuchni
 	}
 
-	private SpecyfikacjaSprzetuKuchennego specyfikacjaGarnkaDoPrzygotowaniaCiasta() {
-		return new SpecyfikacjaSprzetuKuchennego();
+	private SpecyfikacjaSprzetuKuchennego specyfikacjaGarnkaDoCiasta() {
+		return new SpecyfikacjaSprzetuKuchennego(ID_GARNKA_DO_CIASTA, TypSprzetuKuchennego.GARNEK);
 	}
 
-	private SpecyfikacjaSprzetuKuchennego specyfikacjaWykalaczek() {
-		return new SpecyfikacjaSprzetuKuchennego();
+	private SpecyfikacjaSprzetuKuchennego specyfikacjaWykalaczekDoMurzynka() {
+		return new SpecyfikacjaSprzetuKuchennego(ID_WYKALACZEK_DO_MURZYNKA, TypSprzetuKuchennego.WYKALACZKI);
 	}
 
-	private SpecyfikacjaSprzetuKuchennego specyfikacjaNozaDoPokrojeniaMurzynkaWBlaszce() {
-		return new SpecyfikacjaSprzetuKuchennego();
+	private SpecyfikacjaSprzetuKuchennego specyfikacjaNozaDoMurzynka() {
+		return new SpecyfikacjaSprzetuKuchennego(ID_NOZA_DO_MURZYNKA, TypSprzetuKuchennego.NOZ_DO_CIASTA);
 	}
 
-	private SpecyfikacjaSprzetuKuchennego specyfikacjaLopatkiDoWyjeciaMurzynkaZBlaszki() {
-		return new SpecyfikacjaSprzetuKuchennego();
+	private SpecyfikacjaSprzetuKuchennego specyfikacjaLopatkiDoWyjeciaMurzynka() {
+		return new SpecyfikacjaSprzetuKuchennego(ID_LOPATKI_DO_MURZYNKA, TypSprzetuKuchennego.LOPATKA_DO_CIASTA);
 	}
 
-	private SpecyfikacjaSprzetuKuchennego specyfikacjaPateryPodMurzynka() {
-		return new SpecyfikacjaSprzetuKuchennego();
+	private SpecyfikacjaSprzetuKuchennego specyfikacjaPateryDoMurzynka() {
+		return new SpecyfikacjaSprzetuKuchennego(ID_PATERY_DO_MURZYNKA, TypSprzetuKuchennego.PATERA_DO_CIASTA);
+	}
+
+	private Skladnik odmierzPorcjeSkladnikaDoDodania(SpecyfikacjaSkladnika specyfikacjaSkladnika) {
+		Skladnik skladnik = skladniki.wez(specyfikacjaSkladnika.id());
+		Skladnik odmierzonySkladnik = new Skladnik(); // TODO: Odmierzyć składnik zgodnie ze specyfikacją
+		skladniki.dodaj(skladnik);
+		return odmierzonySkladnik;
 	}
 
 	private void dodajSkladnikDoGarnka(Skladnik skladnik, SprzetKuchenny garnek) {
@@ -232,8 +251,8 @@ public class Kucharz {
 	}
 
 	private SprzetKuchenny wezLyzkeDoMieszaniaCiasta() {
-		SpecyfikacjaSprzetuKuchennego specyfikacjaLyzki = przepis.specyfikacjaPrzygotowaniaCiasta().lyzkaDoMieszania();
-		return sprzetyKuchenne.wez(specyfikacjaLyzki);
+		SpecyfikacjaSprzetuKuchennego specyfikacjaLyzki = przepis.specyfikacjaPrzygotowaniaCiasta().specyfikacjaLyzkiDoMieszania();
+		return sprzetyKuchenne.wez(specyfikacjaLyzki.id());
 	}
 
 	private void zamieszajCiastoWGarnku(SprzetKuchenny garnek, SprzetKuchenny lyzka) {
@@ -246,6 +265,11 @@ public class Kucharz {
 
 	private void przygotujBlaszkeZgodnieZeSpecyfikacja(SprzetKuchenny blaszka, SpecyfikacjaPrzygotowaniaBlaszki specyfikacjaPrzygotowaniaBlaszki) {
 
+	}
+
+	private SprzetKuchenny przejdzDoPiekarnika() {
+		IdSprzetuKuchennego idPiekarnika = przepis.specyfikacjaUstawienPiekarnika().specyfikacjaPiekarnika().id();
+		return sprzetyKuchenne.uzyj(idPiekarnika);
 	}
 
 	private void nastawTemperaturePiekarnika(SprzetKuchenny piekarnik, TemperaturaPiekarnika temperatura) {

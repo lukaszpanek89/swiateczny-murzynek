@@ -1,8 +1,11 @@
 package com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.przepis;
 
-public class SpecyfikacjaPrzygotowaniaCiasta {
+import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.kuchnia.IdSprzetuKuchennego;
+import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.kuchnia.TypSprzetuKuchennego;
 
-	public SpecyfikacjaSprzetuKuchennego lyzkaDoMieszania() {
-		return new SpecyfikacjaSprzetuKuchennego();
+public final class SpecyfikacjaPrzygotowaniaCiasta {
+
+	public SpecyfikacjaSprzetuKuchennego specyfikacjaLyzkiDoMieszania() {
+		return new SpecyfikacjaSprzetuKuchennego(new IdSprzetuKuchennego("Lyzka do mieszania ciasta"), TypSprzetuKuchennego.LYZKA_STOLOWA);
 	}
 }
