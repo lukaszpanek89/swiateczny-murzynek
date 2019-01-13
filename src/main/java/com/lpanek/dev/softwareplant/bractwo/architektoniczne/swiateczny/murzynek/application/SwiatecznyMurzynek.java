@@ -1,8 +1,8 @@
 package com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.application;
 
 import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.Kucharz;
+import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.MurzynekNaPaterze;
 import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.kuchnia.Kuchnia;
-import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.Murzynek;
 import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.przepis.PrzepisNaMurzynka;
 
 public class SwiatecznyMurzynek {
@@ -12,8 +12,8 @@ public class SwiatecznyMurzynek {
 		PrzepisNaMurzynka przepis = new PrzepisNaMurzynka();
 
 		Kucharz kucharz = new Kucharz(kuchnia);
-		Murzynek murzynek = kucharz.upieczMurzynka(przepis);
+		MurzynekNaPaterze murzynekNaPaterze = kucharz.upieczMurzynka(przepis);
 
-		System.out.println(String.format("%s", murzynek));
+		System.out.println(String.format("%s", murzynekNaPaterze));
 	}
 }

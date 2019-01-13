@@ -13,8 +13,8 @@ public class PrzepisNaMurzynka {
 		return new HashSet<SpecyfikacjaSprzetuKuchennego>();
 	}
 
-	public SpecyfikacjaMieszaniaSkladnikow specyfikacjaMieszaniaSkladnikow() {
-		return new SpecyfikacjaMieszaniaSkladnikow();
+	public SpecyfikacjaPrzygotowaniaSkladnikow specyfikacjaMieszaniaSkladnikow() {
+		return new SpecyfikacjaPrzygotowaniaSkladnikow();
 	}
 
 	public SpecyfikacjaPrzygotowaniaBlaszki specyfikacjaPrzygotowaniaBlaszki() {

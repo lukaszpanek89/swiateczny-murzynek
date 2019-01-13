@@ -33,6 +33,10 @@ public class SprzetyKuchenne {
 		return new SprzetKuchenny();
 	}
 
+	public SprzetKuchenny patera() {
+		return null;
+	}
+
 	public SprzetKuchenny wez(SpecyfikacjaSprzetuKuchennego specyfikacjaSprzetu) {
 		return new SprzetKuchenny();
 	}
