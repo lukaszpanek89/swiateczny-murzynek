@@ -10,7 +10,23 @@ class SprzetyKuchenne {
 
 	}
 
-	public Garnek garnek() {
+	SprzetKuchenny garnek() {
+		return null;
+	}
+
+	SprzetKuchenny blaszka() {
+		return null;
+	}
+
+	SprzetKuchenny piekarnik() {
+		return null;
+	}
+
+	SprzetKuchenny noz() {
+		return null;
+	}
+
+	SprzetKuchenny lopatka() {
 		return null;
 	}
 }
