@@ -1,5 +1,10 @@
 package com.lpanek.dev.softwareplant.bractwo.architektoniczne.domain;
 
-class Skladniki {
+import java.util.Iterator;
 
+class Skladniki implements Iterable<Skladnik> {
+
+	public Iterator<Skladnik> iterator() {
+		return null;
+	}
 }
