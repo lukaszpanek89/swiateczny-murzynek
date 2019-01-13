@@ -1,9 +1,9 @@
 package com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.application;
 
 import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.Kucharz;
-import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.Kuchnia;
+import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.kuchnia.Kuchnia;
 import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.Murzynek;
-import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.PrzepisNaMurzynka;
+import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.przepis.PrzepisNaMurzynka;
 
 public class SwiatecznyMurzynek {
 
