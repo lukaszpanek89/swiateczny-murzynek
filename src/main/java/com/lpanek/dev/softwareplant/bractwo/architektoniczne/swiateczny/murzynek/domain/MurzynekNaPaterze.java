@@ -1,12 +1,6 @@
 package com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain;
 
-import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.kuchnia.SprzetKuchenny;
-
 public class MurzynekNaPaterze {
-
-	MurzynekNaPaterze(Murzynek murzynek, SprzetKuchenny patera) {
-
-	}
 
 	@Override
 	public String toString() {
@@ -31,7 +25,8 @@ public class MurzynekNaPaterze {
 				"     `%%%%%%%%%%%%%%%%%,,,,,,,%%%%%%%%%%%%%%%,,,,,,,%%%%%%%%%%%%%%%%%%%%'\n" +
 				"       `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'\n" +
 				"           `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'\n" +
-				"                 `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'\n";
+				"                 `%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'\n" +
+				"\n";
 	}
 
 }

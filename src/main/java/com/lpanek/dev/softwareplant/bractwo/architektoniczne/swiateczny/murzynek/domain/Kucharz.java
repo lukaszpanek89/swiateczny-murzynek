@@ -62,29 +62,29 @@ public class Kucharz {
 		SprzetyKuchenne sprzetyKuchenne = SprzetyKuchenne.pustyZbior();
 		for (SpecyfikacjaSprzetuKuchennego specyfikacjaSprzetu : przepis.potrzebneSprzetyKuchenne()) {
 			SprzetKuchenny sprzet = znajdzWKuchniSprzetKuchennyLubZglosBrak(specyfikacjaSprzetu);
-			sprzetyKuchenne.dodaj(specyfikacjaSprzetu, sprzet);
+			sprzetyKuchenne.dodaj(sprzet);
 		}
 
 		// TODO: Zapakowac w metody pomocnicze?
 		SpecyfikacjaSprzetuKuchennego specyfikacjaGarnka = specyfikacjaGarnkaDoPrzygotowaniaCiasta();
 		SprzetKuchenny garnek = znajdzWKuchniSprzetKuchennyLubZglosBrak(specyfikacjaGarnka);
-		sprzetyKuchenne.dodaj(specyfikacjaGarnka, garnek);
+		sprzetyKuchenne.dodaj(garnek);
 
 		SpecyfikacjaSprzetuKuchennego specyfikacjaWykalaczek = specyfikacjaWykalaczek();
 		SprzetKuchenny wykalaczki = znajdzWKuchniSprzetKuchennyLubZglosBrak(specyfikacjaWykalaczek);
-		sprzetyKuchenne.dodaj(specyfikacjaWykalaczek, wykalaczki);
+		sprzetyKuchenne.dodaj(wykalaczki);
 
 		SpecyfikacjaSprzetuKuchennego specyfikacjaNoza = specyfikacjaNozaDoPokrojeniaMurzynkaWBlaszce();
 		SprzetKuchenny noz = znajdzWKuchniSprzetKuchennyLubZglosBrak(specyfikacjaNoza);
-		sprzetyKuchenne.dodaj(specyfikacjaNoza, noz);
+		sprzetyKuchenne.dodaj(noz);
 
 		SpecyfikacjaSprzetuKuchennego specyfikacjaLopatki = specyfikacjaLopatkiDoWyjeciaMurzynkaZBlaszki();
 		SprzetKuchenny lopatka = znajdzWKuchniSprzetKuchennyLubZglosBrak(specyfikacjaLopatki);
-		sprzetyKuchenne.dodaj(specyfikacjaLopatki, lopatka);
+		sprzetyKuchenne.dodaj(lopatka);
 
 		SpecyfikacjaSprzetuKuchennego specyfikacjaPatery = specyfikacjaPateryPodMurzynka();
 		SprzetKuchenny patera = znajdzWKuchniSprzetKuchennyLubZglosBrak(specyfikacjaPatery);
-		sprzetyKuchenne.dodaj(specyfikacjaPatery, patera);
+		sprzetyKuchenne.dodaj(patera);
 
 		return sprzetyKuchenne;
 	}
@@ -321,6 +321,6 @@ public class Kucharz {
 	}
 
 	private MurzynekNaPaterze przelozKawalkiMurzynkaNaPatere(SprzetKuchenny blaszka, SprzetKuchenny patera, SprzetKuchenny lopatka) {
-		return new MurzynekNaPaterze(new Murzynek(), patera);
+		return new MurzynekNaPaterze();
 	}
 }

@@ -8,7 +8,7 @@ public class SprzetyKuchenne {
 		return new SprzetyKuchenne();
 	}
 
-	public void dodaj(SpecyfikacjaSprzetuKuchennego specyfikacjaSprzetu, SprzetKuchenny sprzet) {
+	public void dodaj(SprzetKuchenny sprzet) {
 
 	}
 
