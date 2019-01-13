@@ -7,6 +7,5 @@ public enum TrybPracyPiekarnika {
 	DOL,
 	GORA_TERMOOBIEG,
 	DOL_TERMOOBIEG,
-	TERMOOBIEG,
-	SWIATLO
+	TERMOOBIEG
 }

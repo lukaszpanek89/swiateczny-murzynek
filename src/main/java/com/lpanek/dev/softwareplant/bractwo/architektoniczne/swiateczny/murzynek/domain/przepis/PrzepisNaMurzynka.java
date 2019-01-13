@@ -32,7 +32,7 @@ public class PrzepisNaMurzynka {
 		return new HashSet<SpecyfikacjaSkladnika>();
 	}
 
-	public Set<SpecyfikacjaSkladnika> skladnikiPotrzebneDoPrzygotowaniaBlaszki() {
+	private Set<SpecyfikacjaSkladnika> skladnikiPotrzebneDoPrzygotowaniaBlaszki() {
 		return new HashSet<SpecyfikacjaSkladnika>();
 	}
 }

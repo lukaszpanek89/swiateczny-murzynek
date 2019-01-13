@@ -2,7 +2,7 @@ package com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzyne
 
 public enum TypSprzetuKuchennego {
 	GARNEK,
-	BLASZKA,
+	BLASZKA_DO_PIECZENIA,
 	SZKLANKA,
 	LYZKA_STOLOWA,
 	LYZECZKA_DO_HERBATY,

@@ -9,8 +9,7 @@ public final class SpecyfikacjaSprzetuKuchennego {
 
 	private final TypSprzetuKuchennego typSprzetu;
 
-	public SpecyfikacjaSprzetuKuchennego(IdSprzetuKuchennego idSprzetu,
-			TypSprzetuKuchennego typSprzetu) {
+	public SpecyfikacjaSprzetuKuchennego(IdSprzetuKuchennego idSprzetu, TypSprzetuKuchennego typSprzetu) {
 		this.idSprzetu = idSprzetu;
 		this.typSprzetu = typSprzetu;
 	}

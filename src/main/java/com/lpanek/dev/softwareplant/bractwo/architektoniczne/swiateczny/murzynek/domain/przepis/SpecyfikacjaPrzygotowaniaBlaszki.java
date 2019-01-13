@@ -6,6 +6,6 @@ import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek
 public final class SpecyfikacjaPrzygotowaniaBlaszki {
 
 	public SpecyfikacjaSprzetuKuchennego specyfikacjaBlaszki() {
-		return new SpecyfikacjaSprzetuKuchennego(new IdSprzetuKuchennego("Blaszka do pieczenia murzynka"), TypSprzetuKuchennego.BLASZKA);
+		return new SpecyfikacjaSprzetuKuchennego(new IdSprzetuKuchennego("Blaszka do pieczenia murzynka"), TypSprzetuKuchennego.BLASZKA_DO_PIECZENIA);
 	}
 }

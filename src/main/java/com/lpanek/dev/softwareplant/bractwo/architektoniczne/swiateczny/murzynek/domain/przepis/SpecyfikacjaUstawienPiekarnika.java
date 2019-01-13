@@ -1,6 +1,6 @@
 package com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.przepis;
 
-import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.kuchnia.CzasPracyPiekarnika;
+import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.kuchnia.CzasPieczeniaPiekarnika;
 import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.kuchnia.IdSprzetuKuchennego;
 import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.kuchnia.TemperaturaPiekarnika;
 import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.kuchnia.TypSprzetuKuchennego;
@@ -15,11 +15,11 @@ public final class SpecyfikacjaUstawienPiekarnika {
 		return new TemperaturaPiekarnika();
 	}
 
-	public CzasPracyPiekarnika minimalnyCzasPieczenia() {
-		return new CzasPracyPiekarnika();
+	public CzasPieczeniaPiekarnika minimalnyCzasPieczenia() {
+		return new CzasPieczeniaPiekarnika();
 	}
 
-	public CzasPracyPiekarnika maksymalnyCzasPieczenia() {
-		return new CzasPracyPiekarnika();
+	public CzasPieczeniaPiekarnika maksymalnyCzasPieczenia() {
+		return new CzasPieczeniaPiekarnika();
 	}
 }

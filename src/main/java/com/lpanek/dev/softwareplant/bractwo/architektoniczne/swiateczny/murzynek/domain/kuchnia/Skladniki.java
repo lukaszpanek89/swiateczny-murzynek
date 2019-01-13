@@ -20,6 +20,10 @@ public class Skladniki implements Iterable<Skladnik> {
 		return new Skladnik();
 	}
 
+	public void zwroc(Skladnik skladnik) {
+		// TODO: Ta metoda pod względem implementacji niczym nie różni się od wez() - jest po to, aby podkreślić, że dany składnik był już w kolekcji
+	}
+
 	public Iterator<Skladnik> iterator() {
 		return skladniki.values().iterator();
 	}
