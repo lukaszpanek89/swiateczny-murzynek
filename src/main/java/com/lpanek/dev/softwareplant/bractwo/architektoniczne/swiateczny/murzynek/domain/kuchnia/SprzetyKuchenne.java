@@ -1,12 +1,14 @@
 package com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.kuchnia;
 
+import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.przepis.SpecyfikacjaSprzetuKuchennego;
+
 public class SprzetyKuchenne {
 
 	public static SprzetyKuchenne pustyZbior() {
 		return new SprzetyKuchenne();
 	}
 
-	public void dodaj(SprzetKuchenny sprzetKuchenny) {
+	public void dodaj(SpecyfikacjaSprzetuKuchennego specyfikacjaSprzetu, SprzetKuchenny sprzet) {
 
 	}
 
@@ -28,6 +30,10 @@ public class SprzetyKuchenne {
 	}
 
 	public SprzetKuchenny lopatka() {
+		return new SprzetKuchenny();
+	}
+
+	public SprzetKuchenny wez(SpecyfikacjaSprzetuKuchennego specyfikacjaSprzetu) {
 		return new SprzetKuchenny();
 	}
 }

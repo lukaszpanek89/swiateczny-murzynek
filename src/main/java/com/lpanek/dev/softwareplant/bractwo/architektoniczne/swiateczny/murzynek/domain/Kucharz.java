@@ -32,7 +32,7 @@ public class Kucharz {
 		nastawPiekarnikZMinimalnymCzasemPieczenia(sprzetyKuchenne, przepis);
 		zaczekajNaNagrzaniePiekarnika(sprzetyKuchenne, przepis);
 		wstawBlaszkeDoPiekarnika(sprzetyKuchenne, przepis);
-		odczekajCzasNaUpieczenie(sprzetyKuchenne, przepis);
+		zaczekajNaSkonczeniePieczenia(sprzetyKuchenne, przepis);
 		dopieczMurzynkaJesliPotrzeba(sprzetyKuchenne, przepis);
 		wyjmijBlaszkeZPiekarnika(sprzetyKuchenne, przepis);
 		wylaczPiekarnik(sprzetyKuchenne, przepis);
@@ -53,21 +53,26 @@ public class Kucharz {
 	private SprzetyKuchenne zbierzPotrzebneSprzetyKuchenne(Kuchnia kuchnia, PrzepisNaMurzynka przepis) {
 		SprzetyKuchenne sprzetyKuchenne = SprzetyKuchenne.pustyZbior();
 		for (SpecyfikacjaSprzetuKuchennego specyfikacjaSprzetu : przepis.potrzebneSprzetyKuchenne()) {
-			SprzetKuchenny sprzetKuchenny = znajdzSprzetKuchennyLubZglosBrak(kuchnia, specyfikacjaSprzetu);
-			sprzetyKuchenne.dodaj(sprzetKuchenny);
+			SprzetKuchenny sprzet = znajdzSprzetKuchennyLubZglosBrak(kuchnia, specyfikacjaSprzetu);
+			sprzetyKuchenne.dodaj(specyfikacjaSprzetu, sprzet);
 		}
 
+		// TODO: Zapakowac w metody pomocnicze?
 		SpecyfikacjaSprzetuKuchennego specyfikacjaGarnka = specyfikacjaGarnkaDoMieszaniaSkladnikow();
 		SprzetKuchenny garnek = znajdzSprzetKuchennyLubZglosBrak(kuchnia, specyfikacjaGarnka);
-		sprzetyKuchenne.dodaj(garnek);
+		sprzetyKuchenne.dodaj(specyfikacjaGarnka, garnek);
+
+		SpecyfikacjaSprzetuKuchennego specyfikacjaWykalaczek = specyfikacjaWykalaczek();
+		SprzetKuchenny wykalaczki = znajdzSprzetKuchennyLubZglosBrak(kuchnia, specyfikacjaWykalaczek);
+		sprzetyKuchenne.dodaj(specyfikacjaWykalaczek, wykalaczki);
 
 		SpecyfikacjaSprzetuKuchennego specyfikacjaNoza = specyfikacjaNozaDoPokrojeniaMurzynkaWBlaszce();
 		SprzetKuchenny noz = znajdzSprzetKuchennyLubZglosBrak(kuchnia, specyfikacjaNoza);
-		sprzetyKuchenne.dodaj(noz);
+		sprzetyKuchenne.dodaj(specyfikacjaNoza, noz);
 
 		SpecyfikacjaSprzetuKuchennego specyfikacjaLopatki = specyfikacjaLopatkiDoWyjeciaMurzynkaZBlaszki();
 		SprzetKuchenny lopatka = znajdzSprzetKuchennyLubZglosBrak(kuchnia, specyfikacjaLopatki);
-		sprzetyKuchenne.dodaj(lopatka);
+		sprzetyKuchenne.dodaj(specyfikacjaLopatki, lopatka);
 
 		return sprzetyKuchenne;
 	}
@@ -81,13 +86,11 @@ public class Kucharz {
 	}
 
 	private void wymieszajSkladnikiWGarnku(SprzetyKuchenne sprzetyKuchenne, PrzepisNaMurzynka przepis) {
-		// TODO: A może to w sprzetachKuchennych powinna byc odpowiednia metoda?
-		// TODO: A moze specyfikacjaLyzkiDoMieszania?
-		SpecyfikacjaSprzetuKuchennego specyfikacjaSprzetuDoMieszania = przepis.specyfikacjaMieszaniaSkladnikow().sprzetDoMieszania();
-		SprzetKuchenny sprzetDoMieszania = wezSprzetDoMieszania(sprzetyKuchenne, specyfikacjaSprzetuDoMieszania);
+		SpecyfikacjaSprzetuKuchennego specyfikacjaLyzki = przepis.specyfikacjaMieszaniaSkladnikow().lyzkaDoMieszania();
+		SprzetKuchenny lyzka = sprzetyKuchenne.wez(specyfikacjaLyzki);
 		SprzetKuchenny garnek = sprzetyKuchenne.garnek();
 		do {
-			zamieszajZawartoscGarnka(garnek, sprzetDoMieszania, sprzetyKuchenne);
+			zamieszajZawartoscGarnka(garnek, lyzka, sprzetyKuchenne);
 		} while (skladnikiWymagajaDalszegoMieszania(garnek));
 	}
 
@@ -126,7 +129,7 @@ public class Kucharz {
 		zamknijPiekarnik(piekarnik);
 	}
 
-	private void odczekajCzasNaUpieczenie(SprzetyKuchenne sprzetyKuchenne, PrzepisNaMurzynka przepis) {
+	private void zaczekajNaSkonczeniePieczenia(SprzetyKuchenne sprzetyKuchenne, PrzepisNaMurzynka przepis) {
 		SprzetKuchenny piekarnik = sprzetyKuchenne.piekarnik();
 		while (czasPieczeniaNieUplynal(piekarnik)) {
 			czekajPrzezMinute();
@@ -192,6 +195,10 @@ public class Kucharz {
 		return new SpecyfikacjaSprzetuKuchennego();
 	}
 
+	private SpecyfikacjaSprzetuKuchennego specyfikacjaWykalaczek() {
+		return null;
+	}
+
 	private SpecyfikacjaSprzetuKuchennego specyfikacjaNozaDoPokrojeniaMurzynkaWBlaszce() {
 		return new SpecyfikacjaSprzetuKuchennego();
 	}
@@ -208,7 +215,7 @@ public class Kucharz {
 		return new SprzetKuchenny();
 	}
 
-	private void zamieszajZawartoscGarnka(SprzetKuchenny garnek, SprzetKuchenny sprzetDoMieszania, SprzetyKuchenne sprzetyKuchenne) {
+	private void zamieszajZawartoscGarnka(SprzetKuchenny garnek, SprzetKuchenny lyzka, SprzetyKuchenne sprzetyKuchenne) {
 
 	}
 

@@ -2,7 +2,7 @@ package com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzyne
 
 public class SpecyfikacjaMieszaniaSkladnikow {
 
-	public SpecyfikacjaSprzetuKuchennego sprzetDoMieszania() {
+	public SpecyfikacjaSprzetuKuchennego lyzkaDoMieszania() {
 		return new SpecyfikacjaSprzetuKuchennego();
 	}
 }
