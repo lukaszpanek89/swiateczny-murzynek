@@ -58,7 +58,7 @@ public class Kucharz {
 		blaszka = wyjmijBlaszkeZPiekarnika();
 		wylaczPiekarnik();
 		zaczekajNaOstygniecieMurzynka(blaszka);
-		return przelozMurzynkaZBlaszkiNaPatere(blaszka);
+		return pokrojMurzynkaIPrzelozZBlaszkiNaPatere(blaszka);
 	}
 
 	// --------------- METODY POZIOMU 1 ---------------
@@ -113,8 +113,8 @@ public class Kucharz {
 	}
 
 	private void nastawPiekarnikZMinimalnymCzasemPieczenia() {
-		SpecyfikacjaUstawienPiekarnika specyfikacjaPiekarnika = przepis.specyfikacjaUstawienPiekarnika();
 		SprzetKuchenny piekarnik = przejdzDoPiekarnika();
+		SpecyfikacjaUstawienPiekarnika specyfikacjaPiekarnika = przepis.specyfikacjaUstawienPiekarnika();
 		nastawTemperaturePiekarnika(piekarnik, specyfikacjaPiekarnika.temperatura());
 		nastawTrybPracyPiekarnika(piekarnik, TrybPracyPiekarnika.GORA_DOL);
 		nastawCzasPieczeniaPiekarnika(piekarnik, specyfikacjaPiekarnika.minimalnyCzasPieczenia());
@@ -176,15 +176,17 @@ public class Kucharz {
 		}
 	}
 
-	private MurzynekNaPaterze przelozMurzynkaZBlaszkiNaPatere(SprzetKuchenny blaszka) {
+	private MurzynekNaPaterze pokrojMurzynkaIPrzelozZBlaszkiNaPatere(SprzetKuchenny blaszka) {
 		SprzetKuchenny noz = sprzetyKuchenne.wez(ID_NOZA_DO_MURZYNKA);
-		SprzetKuchenny lopatka = sprzetyKuchenne.wez(ID_LOPATKI_DO_MURZYNKA);
-		SprzetKuchenny patera = sprzetyKuchenne.wez(ID_PATERY_DO_MURZYNKA);
 		pokrojMurzynkaNaKawalki(blaszka, noz);
-		MurzynekNaPaterze murzynekNaPaterze = przelozKawalkiMurzynkaNaPatere(blaszka, patera, lopatka);
 		sprzetyKuchenne.zwroc(noz);
+
+		SprzetKuchenny patera = sprzetyKuchenne.wez(ID_PATERY_DO_MURZYNKA);
+		SprzetKuchenny lopatka = sprzetyKuchenne.wez(ID_LOPATKI_DO_MURZYNKA);
+		MurzynekNaPaterze murzynekNaPaterze = przelozKawalkiMurzynkaNaPatere(blaszka, patera, lopatka);
 		sprzetyKuchenne.zwroc(lopatka);
 		sprzetyKuchenne.zwroc(patera);
+
 		return murzynekNaPaterze;
 	}
 
