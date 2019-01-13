@@ -6,15 +6,18 @@ import java.util.Set;
 public class PrzepisNaMurzynka {
 
 	public Set<SpecyfikacjaSkladnika> potrzebneSkladniki() {
-		return new HashSet<SpecyfikacjaSkladnika>();
+		HashSet<SpecyfikacjaSkladnika> potrzebneSkladniki = new HashSet<SpecyfikacjaSkladnika>();
+		potrzebneSkladniki.addAll(skladnikiPotrzebneDoPrzygotowaniaCiasta());
+		potrzebneSkladniki.addAll(skladnikiPotrzebneDoPrzygotowaniaBlaszki());
+		return potrzebneSkladniki;
 	}
 
 	public Set<SpecyfikacjaSprzetuKuchennego> potrzebneSprzetyKuchenne() {
 		return new HashSet<SpecyfikacjaSprzetuKuchennego>();
 	}
 
-	public SpecyfikacjaPrzygotowaniaSkladnikow specyfikacjaMieszaniaSkladnikow() {
-		return new SpecyfikacjaPrzygotowaniaSkladnikow();
+	public SpecyfikacjaPrzygotowaniaCiasta specyfikacjaPrzygotowaniaCiasta() {
+		return new SpecyfikacjaPrzygotowaniaCiasta();
 	}
 
 	public SpecyfikacjaPrzygotowaniaBlaszki specyfikacjaPrzygotowaniaBlaszki() {
@@ -23,5 +26,13 @@ public class PrzepisNaMurzynka {
 
 	public SpecyfikacjaUstawienPiekarnika specyfikacjaUstawienPiekarnika() {
 		return new SpecyfikacjaUstawienPiekarnika();
+	}
+
+	public Set<SpecyfikacjaSkladnika> skladnikiPotrzebneDoPrzygotowaniaCiasta() {
+		return new HashSet<SpecyfikacjaSkladnika>();
+	}
+
+	public Set<SpecyfikacjaSkladnika> skladnikiPotrzebneDoPrzygotowaniaBlaszki() {
+		return new HashSet<SpecyfikacjaSkladnika>();
 	}
 }

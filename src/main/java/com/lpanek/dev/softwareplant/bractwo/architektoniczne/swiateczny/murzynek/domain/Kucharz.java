@@ -37,16 +37,15 @@ public class Kucharz {
 		wymieszajSkladnikiWGarnku(garnek);
 		SprzetKuchenny blaszka = wezBlaszke();
 		przygotujBlaszkePodMurzynka(blaszka);
-		wylejZmieszaneSkladnikiNaBlaszke(garnek, blaszka);
+		wylejZmieszaneSkladnikiDoBlaszki(garnek, blaszka);
 		nastawPiekarnikZMinimalnymCzasemPieczenia();
 		zaczekajNaNagrzaniePiekarnika();
 		wstawBlaszkeDoPiekarnika(blaszka);
-		//		blaszka = null;
 		zaczekajNaSkonczeniePieczenia();
 		dopieczMurzynkaJesliPotrzeba();
 		blaszka = wyjmijBlaszkeZPiekarnika();
 		wylaczPiekarnik();
-		zaczekajNaOstygniecieMurzynkaWBlaszce(blaszka);
+		zaczekajNaOstygniecieMurzynka(blaszka);
 		return przelozMurzynkaZBlaszkiNaPatere(blaszka);
 	}
 
@@ -67,7 +66,7 @@ public class Kucharz {
 		}
 
 		// TODO: Zapakowac w metody pomocnicze?
-		SpecyfikacjaSprzetuKuchennego specyfikacjaGarnka = specyfikacjaGarnkaDoMieszaniaSkladnikow();
+		SpecyfikacjaSprzetuKuchennego specyfikacjaGarnka = specyfikacjaGarnkaDoPrzygotowaniaCiasta();
 		SprzetKuchenny garnek = znajdzWKuchniSprzetKuchennyLubZglosBrak(specyfikacjaGarnka);
 		sprzetyKuchenne.dodaj(specyfikacjaGarnka, garnek);
 
@@ -95,6 +94,9 @@ public class Kucharz {
 	}
 
 	private void dodajSkladnikiDoGarnka(SprzetKuchenny garnek) {
+		for (SpecyfikacjaSkladnika specyfikacjaSkladnika : przepis.skladnikiPotrzebneDoPrzygotowaniaCiasta()) {
+
+		}
 		// TODO: Do poprawy
 		for (Skladnik skladnik : skladniki) {
 			dodajSkladnikDoGarnka(skladnik, garnek);
@@ -102,11 +104,10 @@ public class Kucharz {
 	}
 
 	private void wymieszajSkladnikiWGarnku(SprzetKuchenny garnek) {
-		SpecyfikacjaSprzetuKuchennego specyfikacjaLyzki = przepis.specyfikacjaMieszaniaSkladnikow().lyzkaDoMieszania();
-		SprzetKuchenny lyzka = sprzetyKuchenne.wez(specyfikacjaLyzki);
+		SprzetKuchenny lyzka = wezLyzkeDoMieszaniaCiasta();
 		do {
-			zamieszajZawartoscGarnka(garnek, lyzka);
-		} while (skladnikiWymagajaDalszegoMieszania(garnek));
+			zamieszajCiastoWGarnku(garnek, lyzka);
+		} while (ciastoWymagaDalszegoMieszania(garnek));
 	}
 
 	private SprzetKuchenny wezBlaszke() {
@@ -118,7 +119,7 @@ public class Kucharz {
 		przygotujBlaszkeZgodnieZeSpecyfikacja(blaszka, specyfikacjaPrzygotowaniaBlaszki);
 	}
 
-	private void wylejZmieszaneSkladnikiNaBlaszke(SprzetKuchenny garnek, SprzetKuchenny blaszka) {
+	private void wylejZmieszaneSkladnikiDoBlaszki(SprzetKuchenny garnek, SprzetKuchenny blaszka) {
 
 	}
 
@@ -180,7 +181,7 @@ public class Kucharz {
 		nastawCzasPieczeniaPiekarnika(piekarnik, CzasPracyPiekarnika.ZERO);
 	}
 
-	private void zaczekajNaOstygniecieMurzynkaWBlaszce(SprzetKuchenny blaszka) {
+	private void zaczekajNaOstygniecieMurzynka(SprzetKuchenny blaszka) {
 		while (murzynekWBlaszceJestCieply(blaszka)) {
 			czekajPrzezDziesiecMinut();
 		}
@@ -206,7 +207,7 @@ public class Kucharz {
 		return new SprzetKuchenny();
 	}
 
-	private SpecyfikacjaSprzetuKuchennego specyfikacjaGarnkaDoMieszaniaSkladnikow() {
+	private SpecyfikacjaSprzetuKuchennego specyfikacjaGarnkaDoPrzygotowaniaCiasta() {
 		return new SpecyfikacjaSprzetuKuchennego();
 	}
 
@@ -230,15 +231,16 @@ public class Kucharz {
 
 	}
 
-	private SprzetKuchenny wezSprzetDoMieszania(SpecyfikacjaSprzetuKuchennego specyfikacjaSprzetuDoMieszania) {
-		return new SprzetKuchenny();
+	private SprzetKuchenny wezLyzkeDoMieszaniaCiasta() {
+		SpecyfikacjaSprzetuKuchennego specyfikacjaLyzki = przepis.specyfikacjaPrzygotowaniaCiasta().lyzkaDoMieszania();
+		return sprzetyKuchenne.wez(specyfikacjaLyzki);
 	}
 
-	private void zamieszajZawartoscGarnka(SprzetKuchenny garnek, SprzetKuchenny lyzka) {
+	private void zamieszajCiastoWGarnku(SprzetKuchenny garnek, SprzetKuchenny lyzka) {
 
 	}
 
-	private boolean skladnikiWymagajaDalszegoMieszania(SprzetKuchenny garnek) {
+	private boolean ciastoWymagaDalszegoMieszania(SprzetKuchenny garnek) {
 		return false;
 	}
 
