@@ -23,11 +23,11 @@ public class SprzetyKuchenne {
 		return new SprzetKuchenny(); // TODO: Ta metoda powinna usuwać sprzęt z kolekcji
 	}
 
-	public void zwroc(SprzetKuchenny sprzet) {
-		// TODO: Ta metoda pod względem implementacji niczym nie różni się od wez() - jest po to, aby podkreślić, że dany sprzęt był już w kolekcji
-	}
-
 	public SprzetKuchenny uzyj(IdSprzetuKuchennego idSprzetu) {
 		return new SprzetKuchenny(); // TODO: Ta metoda nie powinna usuwać sprzętu z kolekcji
+	}
+
+	public void zwroc(SprzetKuchenny sprzet) {
+		// TODO: Ta metoda pod względem implementacji niczym nie różni się od wez() - jest po to, aby podkreślić, że dany sprzęt był już w kolekcji
 	}
 }
