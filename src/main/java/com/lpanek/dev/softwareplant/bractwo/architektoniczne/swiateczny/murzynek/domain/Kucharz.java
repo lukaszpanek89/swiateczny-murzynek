@@ -161,7 +161,7 @@ public class Kucharz {
 
 	private void zaczekajNaSkonczeniePieczenia() {
 		SprzetKuchenny piekarnik = przejdzDoPiekarnika();
-		while (czasPieczeniaNieUplynal(piekarnik)) {
+		while (piekarnikPiecze(piekarnik)) {
 			czekajPrzezMinute();
 		}
 	}
@@ -172,7 +172,7 @@ public class Kucharz {
 			return;
 		}
 		nastawDodatkowyCzasPieczeniaPiekarnika(piekarnik);
-		while (murzynekJestNiedopieczony(piekarnik) && czasPieczeniaNieUplynal(piekarnik)) {
+		while (murzynekJestNiedopieczony(piekarnik) && piekarnikPiecze(piekarnik)) {
 			czekajPrzezPiecMinut();
 		}
 		if (murzynekJestNiedopieczony(piekarnik)) {
@@ -217,10 +217,6 @@ public class Kucharz {
 	}
 
 	private void ____________METODY_POZIOMU_3____________() {
-	}
-
-	private Skladnik znajdzWKuchniSkladnikLubZglosBrak(SpecyfikacjaSkladnika specyfikacjaSkladnika) {
-		return new Skladnik(); // TODO: Znaleźć składnik w kuchni
 	}
 
 	private SprzetyKuchenne zbierzZKuchniSprzetyWymienioneWPrzepisie() {
@@ -307,7 +303,7 @@ public class Kucharz {
 		return false;
 	}
 
-	private boolean czasPieczeniaNieUplynal(SprzetKuchenny piekarnik) {
+	private boolean piekarnikPiecze(SprzetKuchenny piekarnik) {
 		return false;
 	}
 
@@ -359,6 +355,21 @@ public class Kucharz {
 		return sprzetyKuchenne;
 	}
 
+	private void ____________METODY_POZIOMU_5____________() {
+	}
+
+	private Skladnik znajdzWKuchniSkladnikLubZglosBrak(SpecyfikacjaSkladnika specyfikacjaSkladnika) {
+		return new Skladnik(); // TODO: Znaleźć składnik w kuchni
+	}
+
+	// TODO: Ta metoda jest analogiczna do znajdzWKuchniSkladnikLubZglosBrak(), a jednak jest 2 poziomy nizej. Jak do tego podejsc?
+	private SprzetKuchenny znajdzWKuchniSprzetLubZglosBrak(SpecyfikacjaSprzetuKuchennego specyfikacjaSprzetu) {
+		return new SprzetKuchenny(); // TODO: Znaleźć sprzęt w kuchni
+	}
+
+	private void ____________METODY_POZIOMU_6____________() {
+	}
+
 	private SpecyfikacjaSprzetuKuchennego specyfikacjaGarnkaDoMurzynka() {
 		return new SpecyfikacjaSprzetuKuchennego(ID_GARNKA_DO_MURZYNKA, TypSprzetuKuchennego.GARNEK);
 	}
@@ -377,13 +388,5 @@ public class Kucharz {
 
 	private SpecyfikacjaSprzetuKuchennego specyfikacjaPateryDoMurzynka() {
 		return new SpecyfikacjaSprzetuKuchennego(ID_PATERY_DO_MURZYNKA, TypSprzetuKuchennego.PATERA_DO_CIASTA);
-	}
-
-	private void ____________METODY_POZIOMU_5____________() {
-	}
-
-	// TODO: Ta metoda jest analogiczna do znajdzWKuchniSkladnikLubZglosBrak(), a jednak jest 2 poziomy nizej. Jak do tego podejsc?
-	private SprzetKuchenny znajdzWKuchniSprzetLubZglosBrak(SpecyfikacjaSprzetuKuchennego specyfikacjaSprzetu) {
-		return new SprzetKuchenny(); // TODO: Znaleźć sprzęt w kuchni
 	}
 }
