@@ -1,5 +1,6 @@
 package com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain;
 
+import com.google.common.collect.Sets;
 import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.kuchnia.CzasPieczeniaPiekarnika;
 import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.kuchnia.IdSprzetuKuchennego;
 import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.kuchnia.Kuchnia;
@@ -15,10 +16,11 @@ import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek
 import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.przepis.SpecyfikacjaSkladnika;
 import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.przepis.SpecyfikacjaSprzetuKuchennego;
 import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.przepis.SpecyfikacjaUstawienPiekarnika;
+import java.util.Set;
 
 public class Kucharz {
 
-	private static final IdSprzetuKuchennego ID_GARNKA_DO_CIASTA = new IdSprzetuKuchennego("Garnek do przygotowania ciasta");
+	private static final IdSprzetuKuchennego ID_GARNKA_DO_MURZYNKA = new IdSprzetuKuchennego("Garnek do przygotowania ciasta pod murzynka");
 
 	private static final IdSprzetuKuchennego ID_WYKALACZEK_DO_MURZYNKA = new IdSprzetuKuchennego("Wykalaczki do sprawdzenia murzynka");
 
@@ -26,7 +28,7 @@ public class Kucharz {
 
 	private static final IdSprzetuKuchennego ID_LOPATKI_DO_MURZYNKA = new IdSprzetuKuchennego("Lopatka do wyjecia murzynka");
 
-	private static final IdSprzetuKuchennego ID_PATERY_DO_MURZYNKA = new IdSprzetuKuchennego("Patera do wylozenia murzynka");
+	private static final IdSprzetuKuchennego ID_PATERY_DO_MURZYNKA = new IdSprzetuKuchennego("Patera do podawania murzynka");
 
 	private final Kuchnia kuchnia;
 
@@ -42,11 +44,13 @@ public class Kucharz {
 
 	public MurzynekNaPaterze upieczMurzynka(PrzepisNaMurzynka przepis) {
 		this.przepis = przepis;
-		SprzetKuchenny blaszka;
 		zbierzZKuchniPotrzebneSkladnikiISprzetyKuchenne();
-		blaszka = przygotujBlaszkeZeZmieszanymiSkladnikamiMurzynka();
+		SprzetKuchenny blaszka = przygotujBlaszkeZeZmieszanymiSkladnikamiMurzynka();
 		blaszka = upieczMurzynkaWPiekarniku(blaszka);
-		return poOstygnieciuPokrojMurzynkaIPodajGoNaPaterze(blaszka);
+		return poOstygnieciuPokrojMurzynkaIPrzeniesGoNaPatere(blaszka);
+	}
+
+	private void ____________METODY_POZIOMU_1____________() {
 	}
 
 	private void zbierzZKuchniPotrzebneSkladnikiISprzetyKuchenne() {
@@ -75,12 +79,14 @@ public class Kucharz {
 		return blaszka;
 	}
 
-	private MurzynekNaPaterze poOstygnieciuPokrojMurzynkaIPodajGoNaPaterze(SprzetKuchenny blaszka) {
+	private MurzynekNaPaterze poOstygnieciuPokrojMurzynkaIPrzeniesGoNaPatere(SprzetKuchenny blaszka) {
 		zaczekajNaOstygniecieMurzynka(blaszka);
-		return pokrojMurzynkaIPrzelozZBlaszkiNaPatere(blaszka);
+		pokrojMurzynkaWBlaszce(blaszka);
+		return przelozMurzynkaZBlaszkiNaPatere(blaszka);
 	}
 
-	// --------------- METODY POZIOMU 1 ---------------
+	private void ____________METODY_POZIOMU_2____________() {
+	}
 
 	private void zbierzZKuchniPotrzebneSkladniki() {
 		Skladniki skladniki = Skladniki.pustyZbior();
@@ -99,7 +105,7 @@ public class Kucharz {
 	}
 
 	private SprzetKuchenny wezGarnek() {
-		return sprzetyKuchenne.wez(ID_GARNKA_DO_CIASTA);
+		return sprzetyKuchenne.wez(ID_GARNKA_DO_MURZYNKA);
 	}
 
 	private void dodajSkladnikiDoGarnka(SprzetKuchenny garnek) {
@@ -195,59 +201,41 @@ public class Kucharz {
 		}
 	}
 
-	private MurzynekNaPaterze pokrojMurzynkaIPrzelozZBlaszkiNaPatere(SprzetKuchenny blaszka) {
+	private void pokrojMurzynkaWBlaszce(SprzetKuchenny blaszka) {
 		SprzetKuchenny noz = sprzetyKuchenne.wez(ID_NOZA_DO_MURZYNKA);
 		pokrojMurzynkaNaKawalki(blaszka, noz);
 		sprzetyKuchenne.zwroc(noz);
+	}
 
+	private MurzynekNaPaterze przelozMurzynkaZBlaszkiNaPatere(SprzetKuchenny blaszka) {
 		SprzetKuchenny patera = sprzetyKuchenne.wez(ID_PATERY_DO_MURZYNKA);
 		SprzetKuchenny lopatka = sprzetyKuchenne.wez(ID_LOPATKI_DO_MURZYNKA);
 		MurzynekNaPaterze murzynekNaPaterze = przelozKawalkiMurzynkaNaPatere(blaszka, patera, lopatka);
 		sprzetyKuchenne.zwroc(lopatka);
 		sprzetyKuchenne.zwroc(patera);
-
 		return murzynekNaPaterze;
 	}
 
-	// --------------- METODY POZIOMU 2 ---------------
+	private void ____________METODY_POZIOMU_3____________() {
+	}
 
 	private Skladnik znajdzWKuchniSkladnikLubZglosBrak(SpecyfikacjaSkladnika specyfikacjaSkladnika) {
 		return new Skladnik(); // TODO: Znaleźć składnik w kuchni
 	}
 
 	private SprzetyKuchenne zbierzZKuchniSprzetyWymienioneWPrzepisie() {
-		SprzetyKuchenne sprzetyKuchenne = SprzetyKuchenne.pustyZbior();
-		for (SpecyfikacjaSprzetuKuchennego specyfikacjaSprzetu : przepis.potrzebneSprzetyKuchenne()) {
-			SprzetKuchenny sprzet = znajdzWKuchniSprzetKuchennyLubZglosBrak(specyfikacjaSprzetu);
-			sprzetyKuchenne.dodaj(sprzet);
-		}
-		return sprzetyKuchenne;
+		Set<SpecyfikacjaSprzetuKuchennego> sprzetyWymienioneWPrzepisie = przepis.potrzebneSprzetyKuchenne();
+		return zbierzZKuchniWskazaneSprzety(sprzetyWymienioneWPrzepisie);
 	}
 
 	private SprzetyKuchenne zbierzZKuchniPozostalePotrzebneSprzety() {
-		SprzetyKuchenne sprzetyKuchenne = SprzetyKuchenne.pustyZbior();
-
-		SpecyfikacjaSprzetuKuchennego specyfikacjaGarnka = specyfikacjaGarnkaDoCiasta();
-		SprzetKuchenny garnek = znajdzWKuchniSprzetKuchennyLubZglosBrak(specyfikacjaGarnka);
-		sprzetyKuchenne.dodaj(garnek);
-
-		SpecyfikacjaSprzetuKuchennego specyfikacjaWykalaczek = specyfikacjaWykalaczekDoMurzynka();
-		SprzetKuchenny wykalaczki = znajdzWKuchniSprzetKuchennyLubZglosBrak(specyfikacjaWykalaczek);
-		sprzetyKuchenne.dodaj(wykalaczki);
-
-		SpecyfikacjaSprzetuKuchennego specyfikacjaNoza = specyfikacjaNozaDoMurzynka();
-		SprzetKuchenny noz = znajdzWKuchniSprzetKuchennyLubZglosBrak(specyfikacjaNoza);
-		sprzetyKuchenne.dodaj(noz);
-
-		SpecyfikacjaSprzetuKuchennego specyfikacjaLopatki = specyfikacjaLopatkiDoWyjeciaMurzynka();
-		SprzetKuchenny lopatka = znajdzWKuchniSprzetKuchennyLubZglosBrak(specyfikacjaLopatki);
-		sprzetyKuchenne.dodaj(lopatka);
-
-		SpecyfikacjaSprzetuKuchennego specyfikacjaPatery = specyfikacjaPateryDoMurzynka();
-		SprzetKuchenny patera = znajdzWKuchniSprzetKuchennyLubZglosBrak(specyfikacjaPatery);
-		sprzetyKuchenne.dodaj(patera);
-
-		return sprzetyKuchenne;
+		Set<SpecyfikacjaSprzetuKuchennego> pozostalePotrzebneSprzety = Sets.newHashSet(
+				specyfikacjaGarnkaDoMurzynka(),
+				specyfikacjaWykalaczekDoMurzynka(),
+				specyfikacjaNozaDoMurzynka(),
+				specyfikacjaLopatkiDoMurzynka(),
+				specyfikacjaPateryDoMurzynka());
+		return zbierzZKuchniWskazaneSprzety(pozostalePotrzebneSprzety);
 	}
 
 	private Skladnik odmierzPorcjeSkladnikaDoDodania(SpecyfikacjaSkladnika specyfikacjaSkladnika) {
@@ -359,15 +347,20 @@ public class Kucharz {
 		return new MurzynekNaPaterze();
 	}
 
-	// --------------- METODY POZIOMU 3 ---------------
-
-	// TODO: Ta metoda jest analogiczna do znajdzWKuchniSkladnikLubZglosBrak(), a jednak jest poziom nizej
-	private SprzetKuchenny znajdzWKuchniSprzetKuchennyLubZglosBrak(SpecyfikacjaSprzetuKuchennego specyfikacjaSprzetu) {
-		return new SprzetKuchenny(); // TODO: Znaleźć sprzęt w kuchni
+	private void ____________METODY_POZIOMU_4____________() {
 	}
 
-	private SpecyfikacjaSprzetuKuchennego specyfikacjaGarnkaDoCiasta() {
-		return new SpecyfikacjaSprzetuKuchennego(ID_GARNKA_DO_CIASTA, TypSprzetuKuchennego.GARNEK);
+	private SprzetyKuchenne zbierzZKuchniWskazaneSprzety(Set<SpecyfikacjaSprzetuKuchennego> specyfikacjaSprzetow) {
+		SprzetyKuchenne sprzetyKuchenne = SprzetyKuchenne.pustyZbior();
+		for (SpecyfikacjaSprzetuKuchennego specyfikacjaSprzetu : specyfikacjaSprzetow) {
+			SprzetKuchenny sprzet = znajdzWKuchniSprzetLubZglosBrak(specyfikacjaSprzetu);
+			sprzetyKuchenne.dodaj(sprzet);
+		}
+		return sprzetyKuchenne;
+	}
+
+	private SpecyfikacjaSprzetuKuchennego specyfikacjaGarnkaDoMurzynka() {
+		return new SpecyfikacjaSprzetuKuchennego(ID_GARNKA_DO_MURZYNKA, TypSprzetuKuchennego.GARNEK);
 	}
 
 	private SpecyfikacjaSprzetuKuchennego specyfikacjaWykalaczekDoMurzynka() {
@@ -378,11 +371,19 @@ public class Kucharz {
 		return new SpecyfikacjaSprzetuKuchennego(ID_NOZA_DO_MURZYNKA, TypSprzetuKuchennego.NOZ_DO_CIASTA);
 	}
 
-	private SpecyfikacjaSprzetuKuchennego specyfikacjaLopatkiDoWyjeciaMurzynka() {
+	private SpecyfikacjaSprzetuKuchennego specyfikacjaLopatkiDoMurzynka() {
 		return new SpecyfikacjaSprzetuKuchennego(ID_LOPATKI_DO_MURZYNKA, TypSprzetuKuchennego.LOPATKA_DO_CIASTA);
 	}
 
 	private SpecyfikacjaSprzetuKuchennego specyfikacjaPateryDoMurzynka() {
 		return new SpecyfikacjaSprzetuKuchennego(ID_PATERY_DO_MURZYNKA, TypSprzetuKuchennego.PATERA_DO_CIASTA);
+	}
+
+	private void ____________METODY_POZIOMU_5____________() {
+	}
+
+	// TODO: Ta metoda jest analogiczna do znajdzWKuchniSkladnikLubZglosBrak(), a jednak jest 2 poziomy nizej. Jak do tego podejsc?
+	private SprzetKuchenny znajdzWKuchniSprzetLubZglosBrak(SpecyfikacjaSprzetuKuchennego specyfikacjaSprzetu) {
+		return new SprzetKuchenny(); // TODO: Znaleźć sprzęt w kuchni
 	}
 }

@@ -1,5 +1,6 @@
 package com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.przepis;
 
+import com.google.common.base.Optional;
 import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.kuchnia.IdSkladnika;
 import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.kuchnia.IdSprzetuKuchennego;
 import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.kuchnia.IloscSkladnika;
@@ -30,5 +31,13 @@ public final class SpecyfikacjaSkladnika {
 
 	public IdSkladnika id() {
 		return idSkladnika;
+	}
+
+	public IloscSkladnika getIloscSkladnika() {
+		return iloscSkladnika;
+	}
+
+	public Optional<IdSprzetuKuchennego> getSprzetBedacyMiaraIlosciSkladnika() {
+		return Optional.fromNullable(sprzetBedacyMiaraIlosciSkladnika);
 	}
 }

@@ -17,7 +17,7 @@ public class Skladniki implements Iterable<Skladnik> {
 	}
 
 	public Skladnik wez(IdSkladnika idSkladnika) {
-		return new Skladnik();
+		return new Skladnik(); // TODO: Ta metoda powinna usuwać skladnik z kolekcji
 	}
 
 	public void zwroc(Skladnik skladnik) {

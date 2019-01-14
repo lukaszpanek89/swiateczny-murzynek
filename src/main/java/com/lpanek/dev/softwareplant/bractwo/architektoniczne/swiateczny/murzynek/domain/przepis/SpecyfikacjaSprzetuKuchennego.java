@@ -17,4 +17,8 @@ public final class SpecyfikacjaSprzetuKuchennego {
 	public IdSprzetuKuchennego id() {
 		return idSprzetu;
 	}
+
+	public TypSprzetuKuchennego getTyp() {
+		return typSprzetu;
+	}
 }
