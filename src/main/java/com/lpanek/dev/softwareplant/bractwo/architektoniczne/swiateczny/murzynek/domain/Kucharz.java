@@ -49,44 +49,47 @@ public class Kucharz {
 
 	public MurzynekNaPaterze upieczMurzynka(PrzepisNaMurzynka przepis) {
 		this.przepis = przepis;
-		zbierzZKuchniPotrzebneSkladnikiISprzetyKuchenne();
-		SprzetKuchenny blaszka = przygotujBlaszkeZeZmieszanymiSkladnikamiMurzynka();
-		blaszka = upieczMurzynkaWPiekarniku(blaszka);
-		return poOstygnieciuPokrojMurzynkaIPrzeniesGoNaPatere(blaszka);
-	}
-
-	private void ____________POZIOM_ABSTRAKCJI_2____________() {
-	}
-
-	private void zbierzZKuchniPotrzebneSkladnikiISprzetyKuchenne() {
 		zbierzZKuchniPotrzebneSkladniki();
-		zbierzZKuchniPotrzebneSprzetyKuchenne();
-		// TODO: Jeśli nie uda się znaleźć któregoś składnika lub sprzętu, to trzeba odłożyć na miejsce te już zebrane
-	}
-
-	private SprzetKuchenny przygotujBlaszkeZeZmieszanymiSkladnikamiMurzynka() {
+		Set<SpecyfikacjaSprzetuKuchennego> specyfikacjeSprzetowZPrzepisu = this.przepis.potrzebneSprzetyKuchenne();
+		Set<SpecyfikacjaSprzetuKuchennego> specyfikacjePozostalychSprzetow = specyfikacjePozostalychPotrzebnychSprzetowKuchennych();
+		Set<SpecyfikacjaSprzetuKuchennego> specyfikacjeWszystkichSprzetow = suma(specyfikacjeSprzetowZPrzepisu, specyfikacjePozostalychSprzetow);
+		SprzetyKuchenne sprzetyKuchenne = SprzetyKuchenne.pustyZbior();
+		for (SpecyfikacjaSprzetuKuchennego specyfikacjaSprzetu : specyfikacjeWszystkichSprzetow) {
+			SprzetKuchenny sprzet = znajdzWKuchniSprzetLubZglosBrak(specyfikacjaSprzetu);
+			sprzetyKuchenne.dodaj(sprzet);
+		}
+		this.sprzetyKuchenne = sprzetyKuchenne;
 		SprzetKuchenny garnek = dodajSkladnikiDoGarnka();
 		wymieszajSkladnikiWGarnku(garnek);
 		SprzetKuchenny blaszka = przygotujBlaszkePrzedWylaniemSkladnikow();
 		wylejZmieszaneSkladnikiDoBlaszki(garnek, blaszka);
-		return blaszka;
-	}
-
-	private SprzetKuchenny upieczMurzynkaWPiekarniku(SprzetKuchenny blaszka) {
 		SprzetKuchenny piekarnik = nastawPiekarnikZMinimalnymCzasemPieczenia();
 		zaczekajNaNagrzaniePiekarnika(piekarnik);
 		wstawBlaszkeDoPiekarnika(blaszka, piekarnik);
 		zaczekajNaSkonczeniePieczenia(piekarnik);
-		dopieczMurzynkaJesliPotrzeba(piekarnik);
+		if (murzynekJestNiedopieczony(piekarnik)) {
+			nastawDodatkowyCzasPieczeniaPiekarnika(piekarnik);
+			while (murzynekJestNiedopieczony(piekarnik) && piekarnikPiecze(piekarnik)) {
+				czekajPrzezPiecMinut();
+			}
+			if (murzynekJestNiedopieczony(piekarnik)) {
+				zglosProblemZUpieczeniemMurzynkaWPiekarniku();
+			}
+		}
 		blaszka = wyjmijBlaszkeZPiekarnika(piekarnik);
 		wylaczPiekarnik(piekarnik);
-		return blaszka;
+		while (murzynekWBlaszceJestCieply(blaszka)) {
+			czekajPrzezDziesiecMinut();
+		}
+		SprzetKuchenny noz = this.sprzetyKuchenne.wez(ID_NOZA_DO_MURZYNKA);
+		while (nieCalyMurzynekWBlaszceJestPokrojonyNaKawalki(blaszka)) {
+			pokrojNaKawalkiRzadMurzynka(blaszka, noz);
+		}
+		this.sprzetyKuchenne.odloz(noz);
+		return przelozMurzynkaZBlaszkiNaPatere(blaszka);
 	}
 
-	private MurzynekNaPaterze poOstygnieciuPokrojMurzynkaIPrzeniesGoNaPatere(SprzetKuchenny blaszka) {
-		zaczekajNaOstygniecieMurzynka(blaszka);
-		pokrojMurzynkaWBlaszce(blaszka);
-		return przelozMurzynkaZBlaszkiNaPatere(blaszka);
+	private void ____________POZIOM_ABSTRAKCJI_2____________() {
 	}
 
 	private void ____________POZIOM_ABSTRAKCJI_3____________() {
@@ -100,18 +103,6 @@ public class Kucharz {
 			skladniki.dodaj(skladnik);
 		}
 		this.skladniki = skladniki;
-	}
-
-	private void zbierzZKuchniPotrzebneSprzetyKuchenne() {
-		Set<SpecyfikacjaSprzetuKuchennego> specyfikacjeSprzetowZPrzepisu = przepis.potrzebneSprzetyKuchenne();
-		Set<SpecyfikacjaSprzetuKuchennego> specyfikacjePozostalychSprzetow = specyfikacjePozostalychPotrzebnychSprzetowKuchennych();
-		Set<SpecyfikacjaSprzetuKuchennego> specyfikacjeWszystkichSprzetow = suma(specyfikacjeSprzetowZPrzepisu, specyfikacjePozostalychSprzetow);
-		SprzetyKuchenne sprzetyKuchenne = SprzetyKuchenne.pustyZbior();
-		for (SpecyfikacjaSprzetuKuchennego specyfikacjaSprzetu : specyfikacjeWszystkichSprzetow) {
-			SprzetKuchenny sprzet = znajdzWKuchniSprzetLubZglosBrak(specyfikacjaSprzetu);
-			sprzetyKuchenne.dodaj(sprzet);
-		}
-		this.sprzetyKuchenne = sprzetyKuchenne;
 	}
 
 	private SprzetKuchenny dodajSkladnikiDoGarnka() {
@@ -174,20 +165,6 @@ public class Kucharz {
 		}
 	}
 
-	private void dopieczMurzynkaJesliPotrzeba(SprzetKuchenny piekarnik) {
-		if (murzynekJestDopieczony(piekarnik)) {
-			return;
-		}
-		nastawDodatkowyCzasPieczeniaPiekarnika(piekarnik);
-		while (murzynekJestNiedopieczony(piekarnik) && piekarnikPiecze(piekarnik)) {
-			czekajPrzezPiecMinut();
-		}
-		if (murzynekJestNiedopieczony(piekarnik)) {
-			// TODO: Potrzebna obługa tego problemu
-			zglosProblemZUpieczeniemMurzynkaWPiekarniku();
-		}
-	}
-
 	private SprzetKuchenny wyjmijBlaszkeZPiekarnika(SprzetKuchenny piekarnik) {
 		otworzPiekarnik(piekarnik);
 		SprzetKuchenny blaszka = wyjmijBlaszkeZOtwartegoPiekarnika(piekarnik);
@@ -199,20 +176,6 @@ public class Kucharz {
 		nastawTemperaturePiekarnika(piekarnik, TemperaturaPiekarnika.ZERO);
 		nastawTrybPracyPiekarnika(piekarnik, TrybPracyPiekarnika.WYLACZONY);
 		nastawCzasPieczeniaPiekarnika(piekarnik, CzasPieczeniaPiekarnika.ZERO);
-	}
-
-	private void zaczekajNaOstygniecieMurzynka(SprzetKuchenny blaszka) {
-		while (murzynekWBlaszceJestCieply(blaszka)) {
-			czekajPrzezDziesiecMinut();
-		}
-	}
-
-	private void pokrojMurzynkaWBlaszce(SprzetKuchenny blaszka) {
-		SprzetKuchenny noz = sprzetyKuchenne.wez(ID_NOZA_DO_MURZYNKA);
-		while (nieCalyMurzynekWBlaszceJestPokrojonyNaKawalki(blaszka)) {
-			pokrojNaKawalkiRzadMurzynka(blaszka, noz);
-		}
-		sprzetyKuchenne.odloz(noz);
 	}
 
 	private MurzynekNaPaterze przelozMurzynkaZBlaszkiNaPatere(SprzetKuchenny blaszka) {
@@ -329,10 +292,6 @@ public class Kucharz {
 
 	private boolean piekarnikPiecze(SprzetKuchenny piekarnik) {
 		return false;
-	}
-
-	private boolean murzynekJestDopieczony(SprzetKuchenny piekarnik) {
-		return true;
 	}
 
 	private boolean murzynekJestNiedopieczony(SprzetKuchenny piekarnik) {
