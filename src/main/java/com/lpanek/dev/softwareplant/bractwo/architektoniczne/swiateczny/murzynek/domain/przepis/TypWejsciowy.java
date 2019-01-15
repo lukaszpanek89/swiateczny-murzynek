@@ -3,7 +3,7 @@ package com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzyne
 import java.util.HashSet;
 import java.util.Set;
 
-public class PrzepisNaMurzynka {
+public class TypWejsciowy {
 
 	public Set<SpecyfikacjaSkladnika> potrzebneSkladniki() {
 		HashSet<SpecyfikacjaSkladnika> potrzebneSkladniki = new HashSet<SpecyfikacjaSkladnika>();
