@@ -44,7 +44,7 @@ public class Kucharz {
 		this.kuchnia = kuchnia;
 	}
 
-	private void ____________POZIOM_ABSTRAKCJI_0____________() {
+	private void ____________POZIOM_ABSTRAKCJI_1____________() {
 	}
 
 	public MurzynekNaPaterze upieczMurzynka(PrzepisNaMurzynka przepis) {
@@ -55,7 +55,7 @@ public class Kucharz {
 		return poOstygnieciuPokrojMurzynkaIPrzeniesGoNaPatere(blaszka);
 	}
 
-	private void ____________POZIOM_ABSTRAKCJI_1____________() {
+	private void ____________POZIOM_ABSTRAKCJI_2____________() {
 	}
 
 	private void zbierzZKuchniPotrzebneSkladnikiISprzetyKuchenne() {
@@ -73,13 +73,13 @@ public class Kucharz {
 	}
 
 	private SprzetKuchenny upieczMurzynkaWPiekarniku(SprzetKuchenny blaszka) {
-		nastawPiekarnikZMinimalnymCzasemPieczenia();
-		zaczekajNaNagrzaniePiekarnika();
-		wstawBlaszkeDoPiekarnika(blaszka);
-		zaczekajNaSkonczeniePieczenia();
-		dopieczMurzynkaJesliPotrzeba();
-		blaszka = wyjmijBlaszkeZPiekarnika();
-		wylaczPiekarnik();
+		SprzetKuchenny piekarnik = nastawPiekarnikZMinimalnymCzasemPieczenia();
+		zaczekajNaNagrzaniePiekarnika(piekarnik);
+		wstawBlaszkeDoPiekarnika(blaszka, piekarnik);
+		zaczekajNaSkonczeniePieczenia(piekarnik);
+		dopieczMurzynkaJesliPotrzeba(piekarnik);
+		blaszka = wyjmijBlaszkeZPiekarnika(piekarnik);
+		wylaczPiekarnik(piekarnik);
 		return blaszka;
 	}
 
@@ -89,7 +89,7 @@ public class Kucharz {
 		return przelozMurzynkaZBlaszkiNaPatere(blaszka);
 	}
 
-	private void ____________POZIOM_ABSTRAKCJI_2____________() {
+	private void ____________POZIOM_ABSTRAKCJI_3____________() {
 	}
 
 	private void zbierzZKuchniPotrzebneSkladniki() {
@@ -147,37 +147,34 @@ public class Kucharz {
 
 	}
 
-	private void nastawPiekarnikZMinimalnymCzasemPieczenia() {
+	private SprzetKuchenny nastawPiekarnikZMinimalnymCzasemPieczenia() {
 		SprzetKuchenny piekarnik = przejdzDoPiekarnika();
 		SpecyfikacjaUstawienPiekarnika specyfikacjaPiekarnika = przepis.specyfikacjaUstawienPiekarnika();
 		nastawTemperaturePiekarnika(piekarnik, specyfikacjaPiekarnika.temperatura());
 		nastawTrybPracyPiekarnika(piekarnik, TrybPracyPiekarnika.GORA_DOL);
 		nastawCzasPieczeniaPiekarnika(piekarnik, specyfikacjaPiekarnika.minimalnyCzasPieczenia());
+		return piekarnik;
 	}
 
-	private void zaczekajNaNagrzaniePiekarnika() {
-		SprzetKuchenny piekarnik = przejdzDoPiekarnika();
+	private void zaczekajNaNagrzaniePiekarnika(SprzetKuchenny piekarnik) {
 		while (piekarnikNagrzewaSie(piekarnik)) {
 			czekajPrzezMinute();
 		}
 	}
 
-	private void wstawBlaszkeDoPiekarnika(SprzetKuchenny blaszka) {
-		SprzetKuchenny piekarnik = przejdzDoPiekarnika();
+	private void wstawBlaszkeDoPiekarnika(SprzetKuchenny blaszka, SprzetKuchenny piekarnik) {
 		otworzPiekarnik(piekarnik);
 		wstawBlaszkeDoOtwartegoPiekarnika(blaszka, piekarnik);
 		zamknijPiekarnik(piekarnik);
 	}
 
-	private void zaczekajNaSkonczeniePieczenia() {
-		SprzetKuchenny piekarnik = przejdzDoPiekarnika();
+	private void zaczekajNaSkonczeniePieczenia(SprzetKuchenny piekarnik) {
 		while (piekarnikPiecze(piekarnik)) {
 			czekajPrzezMinute();
 		}
 	}
 
-	private void dopieczMurzynkaJesliPotrzeba() {
-		SprzetKuchenny piekarnik = przejdzDoPiekarnika();
+	private void dopieczMurzynkaJesliPotrzeba(SprzetKuchenny piekarnik) {
 		if (murzynekJestDopieczony(piekarnik)) {
 			return;
 		}
@@ -191,16 +188,14 @@ public class Kucharz {
 		}
 	}
 
-	private SprzetKuchenny wyjmijBlaszkeZPiekarnika() {
-		SprzetKuchenny piekarnik = przejdzDoPiekarnika();
+	private SprzetKuchenny wyjmijBlaszkeZPiekarnika(SprzetKuchenny piekarnik) {
 		otworzPiekarnik(piekarnik);
 		SprzetKuchenny blaszka = wyjmijBlaszkeZOtwartegoPiekarnika(piekarnik);
 		zamknijPiekarnik(piekarnik);
 		return blaszka;
 	}
 
-	private void wylaczPiekarnik() {
-		SprzetKuchenny piekarnik = przejdzDoPiekarnika();
+	private void wylaczPiekarnik(SprzetKuchenny piekarnik) {
 		nastawTemperaturePiekarnika(piekarnik, TemperaturaPiekarnika.ZERO);
 		nastawTrybPracyPiekarnika(piekarnik, TrybPracyPiekarnika.WYLACZONY);
 		nastawCzasPieczeniaPiekarnika(piekarnik, CzasPieczeniaPiekarnika.ZERO);
@@ -230,7 +225,7 @@ public class Kucharz {
 		return new MurzynekNaPaterze(patera);
 	}
 
-	private void ____________POZIOM_ABSTRAKCJI_3____________() {
+	private void ____________POZIOM_ABSTRAKCJI_4____________() {
 	}
 
 	private Set<SpecyfikacjaSprzetuKuchennego> specyfikacjePozostalychPotrzebnychSprzetowKuchennych() {
@@ -380,7 +375,7 @@ public class Kucharz {
 
 	}
 
-	private void ____________POZIOM_ABSTRAKCJI_4____________() {
+	private void ____________POZIOM_ABSTRAKCJI_5____________() {
 	}
 
 	private SpecyfikacjaSprzetuKuchennego specyfikacjaGarnkaDoMurzynka() {
@@ -403,7 +398,7 @@ public class Kucharz {
 		return new SpecyfikacjaSprzetuKuchennego(ID_PATERY_DO_MURZYNKA, TypSprzetuKuchennego.PATERA_DO_CIASTA);
 	}
 
-	private void ____________POZIOM_ABSTRAKCJI_5____________() {
+	private void ____________POZIOM_ABSTRAKCJI_6____________() {
 	}
 
 	// TODO: Z poziomem abstrakcji tej metody jest coś nie tak - słusznie jest ona bardzo nisko (jest bardzo techniczna), ale z drugiej strony jest
