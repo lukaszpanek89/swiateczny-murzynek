@@ -21,7 +21,7 @@ import java.util.Set;
 
 public class Kucharz {
 
-	// TODO: Wydzielić te stałe do odrębnej klasy (oraz metody z nich korzystające)?
+	// TODO: Wydzielić te stałe (oraz metody z nich korzystające) do odrębnej klasy?
 	private static final IdSprzetuKuchennego ID_GARNKA_DO_MURZYNKA = new IdSprzetuKuchennego("Garnek do przygotowania ciasta pod murzynka");
 
 	private static final IdSprzetuKuchennego ID_WYKALACZEK_DO_MURZYNKA = new IdSprzetuKuchennego("Wykalaczki do sprawdzenia murzynka");
@@ -65,11 +65,9 @@ public class Kucharz {
 	}
 
 	private SprzetKuchenny przygotujBlaszkeZeZmieszanymiSkladnikamiMurzynka() {
-		SprzetKuchenny garnek = wezGarnek();
-		dodajSkladnikiDoGarnka(garnek);
+		SprzetKuchenny garnek = dodajSkladnikiDoGarnka();
 		wymieszajSkladnikiWGarnku(garnek);
-		SprzetKuchenny blaszka = wezBlaszke();
-		przygotujBlaszkePodMurzynka(blaszka);
+		SprzetKuchenny blaszka = przygotujBlaszkePrzedWylaniemSkladnikow();
 		wylejZmieszaneSkladnikiDoBlaszki(garnek, blaszka);
 		return blaszka;
 	}
@@ -116,15 +114,13 @@ public class Kucharz {
 		this.sprzetyKuchenne = sprzetyKuchenne;
 	}
 
-	private SprzetKuchenny wezGarnek() {
-		return sprzetyKuchenne.wez(ID_GARNKA_DO_MURZYNKA);
-	}
-
-	private void dodajSkladnikiDoGarnka(SprzetKuchenny garnek) {
+	private SprzetKuchenny dodajSkladnikiDoGarnka() {
+		SprzetKuchenny garnek = wezGarnek();
 		for (SpecyfikacjaSkladnika specyfikacjaSkladnika : przepis.skladnikiPotrzebneDoPrzygotowaniaCiasta()) {
 			Skladnik odmierzonySkladnik = odmierzPorcjeSkladnikaDoDodania(specyfikacjaSkladnika);
 			dodajSkladnikDoGarnka(odmierzonySkladnik, garnek);
 		}
+		return garnek;
 	}
 
 	private void wymieszajSkladnikiWGarnku(SprzetKuchenny garnek) {
@@ -132,17 +128,19 @@ public class Kucharz {
 		do {
 			zamieszajCiastoWGarnku(garnek, lyzka);
 		} while (ciastoWymagaDalszegoMieszania(garnek));
-		sprzetyKuchenne.zwroc(lyzka);
+		sprzetyKuchenne.odloz(lyzka);
 	}
 
-	private SprzetKuchenny wezBlaszke() {
-		SpecyfikacjaSprzetuKuchennego specyfikacjaBlaszki = przepis.specyfikacjaPrzygotowaniaBlaszki().specyfikacjaBlaszki();
-		return sprzetyKuchenne.wez(specyfikacjaBlaszki.id());
-	}
-
-	private void przygotujBlaszkePodMurzynka(SprzetKuchenny blaszka) {
+	private SprzetKuchenny przygotujBlaszkePrzedWylaniemSkladnikow() {
+		SprzetKuchenny blaszka = wezBlaszke();
 		SpecyfikacjaPrzygotowaniaBlaszki specyfikacjaPrzygotowaniaBlaszki = przepis.specyfikacjaPrzygotowaniaBlaszki();
-		przygotujBlaszkeZgodnieZeSpecyfikacja(blaszka, specyfikacjaPrzygotowaniaBlaszki);
+		if (specyfikacjaPrzygotowaniaBlaszki.czyBlaszkaMaBycWysmarowanaTluszczem()) {
+			wysmarujBlaszkeTluszczem(blaszka);
+		}
+		if (specyfikacjaPrzygotowaniaBlaszki.czyBlaszkaMaBycPosypanaBulkaTarta()) {
+			posypBlaszkeBulkaTarta(blaszka);
+		}
+		return blaszka;
 	}
 
 	private void wylejZmieszaneSkladnikiDoBlaszki(SprzetKuchenny garnek, SprzetKuchenny blaszka) {
@@ -216,17 +214,20 @@ public class Kucharz {
 
 	private void pokrojMurzynkaWBlaszce(SprzetKuchenny blaszka) {
 		SprzetKuchenny noz = sprzetyKuchenne.wez(ID_NOZA_DO_MURZYNKA);
-		pokrojMurzynkaNaKawalki(blaszka, noz);
-		sprzetyKuchenne.zwroc(noz);
+		while (nieCalyMurzynekWBlaszceJestPokrojonyNaKawalki(blaszka)) {
+			pokrojNaKawalkiRzadMurzynka(blaszka, noz);
+		}
+		sprzetyKuchenne.odloz(noz);
 	}
 
 	private MurzynekNaPaterze przelozMurzynkaZBlaszkiNaPatere(SprzetKuchenny blaszka) {
 		SprzetKuchenny patera = sprzetyKuchenne.wez(ID_PATERY_DO_MURZYNKA);
 		SprzetKuchenny lopatka = sprzetyKuchenne.wez(ID_LOPATKI_DO_MURZYNKA);
-		MurzynekNaPaterze murzynekNaPaterze = przelozKawalkiMurzynkaNaPatere(blaszka, patera, lopatka);
-		sprzetyKuchenne.zwroc(patera);
-		sprzetyKuchenne.zwroc(lopatka);
-		return murzynekNaPaterze;
+		while (nieCalyMurzynekJestPrzeniesionyZBlaszki(blaszka)) {
+			przelozkRzadKawalkowMurzynkaZBlaszkiNaPatere(blaszka, patera, lopatka);
+		}
+		sprzetyKuchenne.odloz(lopatka);
+		return new MurzynekNaPaterze(patera);
 	}
 
 	private void ____________POZIOM_ABSTRAKCJI_3____________() {
@@ -245,15 +246,18 @@ public class Kucharz {
 		return new Skladnik(); // TODO: Znaleźć składnik w kuchni
 	}
 
-	// TODO: Ta metoda jest analogiczna do znajdzWKuchniSkladnikLubZglosBrak(), a jednak jest 2 poziomy nizej. Jak do tego podejsc?
 	private SprzetKuchenny znajdzWKuchniSprzetLubZglosBrak(SpecyfikacjaSprzetuKuchennego specyfikacjaSprzetu) {
 		return new SprzetKuchenny(); // TODO: Znaleźć sprzęt w kuchni
+	}
+
+	private SprzetKuchenny wezGarnek() {
+		return sprzetyKuchenne.wez(ID_GARNKA_DO_MURZYNKA);
 	}
 
 	private Skladnik odmierzPorcjeSkladnikaDoDodania(SpecyfikacjaSkladnika specyfikacjaSkladnika) {
 		Skladnik skladnik = skladniki.wez(specyfikacjaSkladnika.id());
 		Skladnik odmierzonySkladnik = new Skladnik(); // TODO: Odmierzyć składnik zgodnie ze specyfikacją
-		skladniki.zwroc(skladnik); // TODO: Zwrócić pomniejszoną ilość składnika
+		skladniki.odloz(skladnik); // TODO: Zwrócić pomniejszoną ilość składnika
 		return odmierzonySkladnik;
 	}
 
@@ -274,7 +278,16 @@ public class Kucharz {
 		return false;
 	}
 
-	private void przygotujBlaszkeZgodnieZeSpecyfikacja(SprzetKuchenny blaszka, SpecyfikacjaPrzygotowaniaBlaszki specyfikacjaPrzygotowaniaBlaszki) {
+	private SprzetKuchenny wezBlaszke() {
+		SpecyfikacjaSprzetuKuchennego specyfikacjaBlaszki = przepis.specyfikacjaPrzygotowaniaBlaszki().specyfikacjaBlaszki();
+		return sprzetyKuchenne.wez(specyfikacjaBlaszki.id());
+	}
+
+	private void wysmarujBlaszkeTluszczem(SprzetKuchenny blaszka) {
+
+	}
+
+	private void posypBlaszkeBulkaTarta(SprzetKuchenny blaszka) {
 
 	}
 
@@ -351,12 +364,20 @@ public class Kucharz {
 		return false;
 	}
 
-	private void pokrojMurzynkaNaKawalki(SprzetKuchenny blaszka, SprzetKuchenny noz) {
+	private boolean nieCalyMurzynekWBlaszceJestPokrojonyNaKawalki(SprzetKuchenny blaszka) {
+		return false;
+	}
+
+	private void pokrojNaKawalkiRzadMurzynka(SprzetKuchenny blaszka, SprzetKuchenny noz) {
 
 	}
 
-	private MurzynekNaPaterze przelozKawalkiMurzynkaNaPatere(SprzetKuchenny blaszka, SprzetKuchenny patera, SprzetKuchenny lopatka) {
-		return new MurzynekNaPaterze(); // TODO: Wyjmować murzynka z blaszki za pomocą łopatki
+	private boolean nieCalyMurzynekJestPrzeniesionyZBlaszki(SprzetKuchenny blaszka) {
+		return false;
+	}
+
+	private void przelozkRzadKawalkowMurzynkaZBlaszkiNaPatere(SprzetKuchenny blaszka, SprzetKuchenny patera, SprzetKuchenny lopatka) {
+
 	}
 
 	private void ____________POZIOM_ABSTRAKCJI_4____________() {
@@ -385,6 +406,10 @@ public class Kucharz {
 	private void ____________POZIOM_ABSTRAKCJI_5____________() {
 	}
 
+	// TODO: Z poziomem abstrakcji tej metody jest coś nie tak - słusznie jest ona bardzo nisko (jest bardzo techniczna), ale z drugiej strony jest
+	// TODO (cd.): wywoływana przez metodę z poziomu 2, a zatem następuje tutaj skok z 2. do 5. poziomu...
+	// TODO (cd.): Może po prostu brakuje tutaj klasy SpecyfikacjeSprzetuKuchennego, która opakowywałaby Set<SpecyfikacjaSprzetuKuchennego> - wtedy metoda
+	// TODO (cd.): suma() byłaby metodą tej klasy opakowującej?
 	private Set<SpecyfikacjaSprzetuKuchennego> suma(Set<SpecyfikacjaSprzetuKuchennego> specyfikacje1, Set<SpecyfikacjaSprzetuKuchennego> specyfikacje2) {
 		return Sets.newHashSet(Iterables.concat(specyfikacje1, specyfikacje2));
 	}

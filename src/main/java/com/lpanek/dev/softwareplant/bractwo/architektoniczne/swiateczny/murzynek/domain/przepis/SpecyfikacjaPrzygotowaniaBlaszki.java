@@ -8,4 +8,12 @@ public final class SpecyfikacjaPrzygotowaniaBlaszki {
 	public SpecyfikacjaSprzetuKuchennego specyfikacjaBlaszki() {
 		return new SpecyfikacjaSprzetuKuchennego(new IdSprzetuKuchennego("Blaszka do pieczenia murzynka"), TypSprzetuKuchennego.BLASZKA_DO_PIECZENIA);
 	}
+
+	public boolean czyBlaszkaMaBycWysmarowanaTluszczem() {
+		return true;
+	}
+
+	public boolean czyBlaszkaMaBycPosypanaBulkaTarta() {
+		return true;
+	}
 }

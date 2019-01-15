@@ -20,7 +20,7 @@ public class Skladniki implements Iterable<Skladnik> {
 		return new Skladnik(); // TODO: Ta metoda powinna usuwać skladnik z kolekcji
 	}
 
-	public void zwroc(Skladnik skladnik) {
+	public void odloz(Skladnik skladnik) {
 		// TODO: Ta metoda pod względem implementacji niczym nie różni się od wez() - jest po to, aby podkreślić, że dany składnik był już w kolekcji
 	}
 

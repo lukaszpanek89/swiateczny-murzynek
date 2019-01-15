@@ -1,6 +1,16 @@
 package com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain;
 
+import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.kuchnia.SprzetKuchenny;
+
 public class MurzynekNaPaterze {
+
+	// TODO: Tutaj zakładamy, że murzynek już znajduje się na przekazanej w argumencie paterze.
+	// TODO (cd.): Innymi słowy, klasa MurzynekNaPaterze jest tylko prostym opakowaniem na paterę z murzynkiem, utworzonym aby podnieść czytelność kodu
+	// TODO (cd.): (dziwnie by to wyglądało, gdyby efektem metody upieczMurzynka() był po prostu obiekt patera ;)).
+	// TODO (cd.): Wygląda to trochę na hack, więc może warto by to było jakoś przeprojektować?
+	MurzynekNaPaterze(SprzetKuchenny patera) {
+
+	}
 
 	@Override
 	public String toString() {
