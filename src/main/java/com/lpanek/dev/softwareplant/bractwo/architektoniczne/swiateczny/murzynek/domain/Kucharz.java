@@ -49,30 +49,12 @@ public class Kucharz {
 
 	public MurzynekNaPaterze upieczMurzynka(PrzepisNaMurzynka przepis) {
 		this.przepis = przepis;
-		zbierzZKuchniPotrzebneSkladnikiISprzetyKuchenne();
-		SprzetKuchenny blaszka = przygotujBlaszkeZeZmieszanymiSkladnikamiMurzynka();
-		blaszka = upieczMurzynkaWPiekarniku(blaszka);
-		return poOstygnieciuPokrojMurzynkaIPrzeniesGoNaPatere(blaszka);
-	}
-
-	private void ____________POZIOM_ABSTRAKCJI_2____________() {
-	}
-
-	private void zbierzZKuchniPotrzebneSkladnikiISprzetyKuchenne() {
 		zbierzZKuchniPotrzebneSkladniki();
 		zbierzZKuchniPotrzebneSprzetyKuchenne();
-		// TODO: Jeśli nie uda się znaleźć któregoś składnika lub sprzętu, to trzeba odłożyć na miejsce te już zebrane
-	}
-
-	private SprzetKuchenny przygotujBlaszkeZeZmieszanymiSkladnikamiMurzynka() {
 		SprzetKuchenny garnek = dodajSkladnikiDoGarnka();
 		wymieszajSkladnikiWGarnku(garnek);
 		SprzetKuchenny blaszka = przygotujBlaszkePrzedWylaniemSkladnikow();
 		wylejZmieszaneSkladnikiDoBlaszki(garnek, blaszka);
-		return blaszka;
-	}
-
-	private SprzetKuchenny upieczMurzynkaWPiekarniku(SprzetKuchenny blaszka) {
 		SprzetKuchenny piekarnik = nastawPiekarnikZMinimalnymCzasemPieczenia();
 		zaczekajNaNagrzaniePiekarnika(piekarnik);
 		wstawBlaszkeDoPiekarnika(blaszka, piekarnik);
@@ -80,13 +62,12 @@ public class Kucharz {
 		dopieczMurzynkaJesliPotrzeba(piekarnik);
 		blaszka = wyjmijBlaszkeZPiekarnika(piekarnik);
 		wylaczPiekarnik(piekarnik);
-		return blaszka;
-	}
-
-	private MurzynekNaPaterze poOstygnieciuPokrojMurzynkaIPrzeniesGoNaPatere(SprzetKuchenny blaszka) {
 		zaczekajNaOstygniecieMurzynka(blaszka);
 		pokrojMurzynkaWBlaszce(blaszka);
 		return przelozMurzynkaZBlaszkiNaPatere(blaszka);
+	}
+
+	private void ____________POZIOM_ABSTRAKCJI_2____________() {
 	}
 
 	private void ____________POZIOM_ABSTRAKCJI_3____________() {
