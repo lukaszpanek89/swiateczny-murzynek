@@ -12,11 +12,11 @@ import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek
 import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.kuchnia.TemperaturaPiekarnika;
 import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.kuchnia.TrybPracyPiekarnika;
 import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.kuchnia.TypSprzetuKuchennego;
-import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.przepis.PrzepisNaMurzynka;
 import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.przepis.SpecyfikacjaPrzygotowaniaBlaszki;
 import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.przepis.SpecyfikacjaSkladnika;
 import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.przepis.SpecyfikacjaSprzetuKuchennego;
 import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.przepis.SpecyfikacjaUstawienPiekarnika;
+import com.lpanek.dev.softwareplant.bractwo.architektoniczne.swiateczny.murzynek.domain.przepis.TypWejsciowy;
 import java.util.Set;
 
 public class Kucharz {
@@ -34,7 +34,7 @@ public class Kucharz {
 
 	private final Kuchnia kuchnia;
 
-	private PrzepisNaMurzynka przepis;
+	private TypWejsciowy przepis;
 
 	private Skladniki skladniki;
 
@@ -47,8 +47,8 @@ public class Kucharz {
 	private void ____________POZIOM_ABSTRAKCJI_1____________() {
 	}
 
-	public MurzynekNaPaterze upieczMurzynka(PrzepisNaMurzynka przepis) {
-		this.przepis = przepis;
+	public TypWyjsciowy nazwaMetody(TypWejsciowy wejscie) {
+		this.przepis = wejscie;
 		zbierzZKuchniPotrzebneSkladniki();
 		zbierzZKuchniPotrzebneSprzetyKuchenne();
 		SprzetKuchenny garnek = dodajSkladnikiDoGarnka();
@@ -196,14 +196,14 @@ public class Kucharz {
 		sprzetyKuchenne.odloz(noz);
 	}
 
-	private MurzynekNaPaterze przelozMurzynkaZBlaszkiNaPatere(SprzetKuchenny blaszka) {
+	private TypWyjsciowy przelozMurzynkaZBlaszkiNaPatere(SprzetKuchenny blaszka) {
 		SprzetKuchenny patera = sprzetyKuchenne.wez(ID_PATERY_DO_MURZYNKA);
 		SprzetKuchenny lopatka = sprzetyKuchenne.wez(ID_LOPATKI_DO_MURZYNKA);
 		while (nieCalyMurzynekJestPrzeniesionyZBlaszki(blaszka)) {
 			przelozkRzadKawalkowMurzynkaZBlaszkiNaPatere(blaszka, patera, lopatka);
 		}
 		sprzetyKuchenne.odloz(lopatka);
-		return new MurzynekNaPaterze(patera);
+		return new TypWyjsciowy(patera);
 	}
 
 	private void ____________POZIOM_ABSTRAKCJI_4____________() {
