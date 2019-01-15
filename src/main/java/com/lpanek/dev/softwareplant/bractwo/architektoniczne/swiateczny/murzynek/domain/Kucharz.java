@@ -219,7 +219,7 @@ public class Kucharz {
 		SprzetKuchenny patera = sprzetyKuchenne.wez(ID_PATERY_DO_MURZYNKA);
 		SprzetKuchenny lopatka = sprzetyKuchenne.wez(ID_LOPATKI_DO_MURZYNKA);
 		while (nieCalyMurzynekJestPrzeniesionyZBlaszki(blaszka)) {
-			przelozkRzadKawalkowMurzynkaZBlaszkiNaPatere(blaszka, patera, lopatka);
+			przelozRzadKawalkowMurzynkaZBlaszkiNaPatere(blaszka, patera, lopatka);
 		}
 		sprzetyKuchenne.odloz(lopatka);
 		return new MurzynekNaPaterze(patera);
@@ -371,7 +371,7 @@ public class Kucharz {
 		return false;
 	}
 
-	private void przelozkRzadKawalkowMurzynkaZBlaszkiNaPatere(SprzetKuchenny blaszka, SprzetKuchenny patera, SprzetKuchenny lopatka) {
+	private void przelozRzadKawalkowMurzynkaZBlaszkiNaPatere(SprzetKuchenny blaszka, SprzetKuchenny patera, SprzetKuchenny lopatka) {
 
 	}
 
