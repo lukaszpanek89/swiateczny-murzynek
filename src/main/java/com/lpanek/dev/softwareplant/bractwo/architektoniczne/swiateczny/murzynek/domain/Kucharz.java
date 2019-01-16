@@ -28,9 +28,9 @@ public class Kucharz {
 
 	private static final IdSprzetuKuchennego ID_NOZA_DO_MURZYNKA = new IdSprzetuKuchennego("Noz do pokrojenia murzynka");
 
-	private static final IdSprzetuKuchennego ID_LOPATKI_DO_MURZYNKA = new IdSprzetuKuchennego("Lopatka do wyjecia murzynka");
+	private static final IdSprzetuKuchennego ID_LOPATKI_DO_CIASTA = new IdSprzetuKuchennego("Lopatka do wyjecia murzynka");
 
-	private static final IdSprzetuKuchennego ID_PATERY_DO_MURZYNKA = new IdSprzetuKuchennego("Patera do podawania murzynka");
+	private static final IdSprzetuKuchennego ID_TALERZA_DO_CIASTA = new IdSprzetuKuchennego("Patera do podawania murzynka");
 
 	private final Kuchnia kuchnia;
 
@@ -63,24 +63,24 @@ public class Kucharz {
 		wymieszajSkladnikiWGarnku(garnek);
 		SprzetKuchenny blaszka = przygotujBlaszkePrzedWylaniemSkladnikow();
 		wylejZmieszaneSkladnikiDoBlaszki(garnek, blaszka);
-		blaszka = upieczMurzynkaWPiekarniku(blaszka);
-		while (murzynekWBlaszceJestCieply(blaszka)) {
+		blaszka = upieczCiastoWPiekarniku(blaszka);
+		while (ciastoWBlaszceJestCieple(blaszka)) {
 			czekajPrzezDziesiecMinut();
 		}
-		pokrojMurzynkaWBlaszce(blaszka);
-		SprzetKuchenny patera = this.sprzetyKuchenne.wez(ID_PATERY_DO_MURZYNKA);
-		SprzetKuchenny lopatka = this.sprzetyKuchenne.wez(ID_LOPATKI_DO_MURZYNKA);
-		while (nieCalyMurzynekJestPrzeniesionyZBlaszki(blaszka)) {
-			przelozkRzadKawalkowMurzynkaZBlaszkiNaPatere(blaszka, patera, lopatka);
+		pokrojCiastoWBlaszce(blaszka);
+		SprzetKuchenny talerz = this.sprzetyKuchenne.wez(ID_TALERZA_DO_CIASTA);
+		SprzetKuchenny lopatka = this.sprzetyKuchenne.wez(ID_LOPATKI_DO_CIASTA);
+		while (nieCaleCiastoJestPrzeniesioneZBlaszki(blaszka)) {
+			przelozkRzadKawalkowCiastaZBlaszkiNaTalerz(blaszka, talerz, lopatka);
 		}
 		this.sprzetyKuchenne.odloz(lopatka);
-		return new TypWyjsciowy(patera);
+		return new TypWyjsciowy(talerz);
 	}
 
 	private void ____________POZIOM_ABSTRAKCJI_2____________() {
 	}
 
-	private SprzetKuchenny upieczMurzynkaWPiekarniku(SprzetKuchenny blaszka) {
+	private SprzetKuchenny upieczCiastoWPiekarniku(SprzetKuchenny blaszka) {
 		SprzetKuchenny piekarnik = nastawPiekarnikZMinimalnymCzasemPieczenia();
 		zaczekajNaNagrzaniePiekarnika(piekarnik);
 		wstawBlaszkeDoPiekarnika(blaszka, piekarnik);
@@ -191,7 +191,7 @@ public class Kucharz {
 		nastawCzasPieczeniaPiekarnika(piekarnik, CzasPieczeniaPiekarnika.ZERO);
 	}
 
-	private void pokrojMurzynkaWBlaszce(SprzetKuchenny blaszka) {
+	private void pokrojCiastoWBlaszce(SprzetKuchenny blaszka) {
 		SprzetKuchenny noz = sprzetyKuchenne.wez(ID_NOZA_DO_MURZYNKA);
 		while (nieCalyMurzynekWBlaszceJestPokrojonyNaKawalki(blaszka)) {
 			pokrojNaKawalkiRzadMurzynka(blaszka, noz);
@@ -329,7 +329,7 @@ public class Kucharz {
 
 	}
 
-	private boolean murzynekWBlaszceJestCieply(SprzetKuchenny blaszka) {
+	private boolean ciastoWBlaszceJestCieple(SprzetKuchenny blaszka) {
 		return false;
 	}
 
@@ -341,11 +341,11 @@ public class Kucharz {
 
 	}
 
-	private boolean nieCalyMurzynekJestPrzeniesionyZBlaszki(SprzetKuchenny blaszka) {
+	private boolean nieCaleCiastoJestPrzeniesioneZBlaszki(SprzetKuchenny blaszka) {
 		return false;
 	}
 
-	private void przelozkRzadKawalkowMurzynkaZBlaszkiNaPatere(SprzetKuchenny blaszka, SprzetKuchenny patera, SprzetKuchenny lopatka) {
+	private void przelozkRzadKawalkowCiastaZBlaszkiNaTalerz(SprzetKuchenny blaszka, SprzetKuchenny patera, SprzetKuchenny lopatka) {
 
 	}
 
@@ -365,11 +365,11 @@ public class Kucharz {
 	}
 
 	private SpecyfikacjaSprzetuKuchennego specyfikacjaLopatkiDoMurzynka() {
-		return new SpecyfikacjaSprzetuKuchennego(ID_LOPATKI_DO_MURZYNKA, TypSprzetuKuchennego.LOPATKA_DO_CIASTA);
+		return new SpecyfikacjaSprzetuKuchennego(ID_LOPATKI_DO_CIASTA, TypSprzetuKuchennego.LOPATKA_DO_CIASTA);
 	}
 
 	private SpecyfikacjaSprzetuKuchennego specyfikacjaPateryDoMurzynka() {
-		return new SpecyfikacjaSprzetuKuchennego(ID_PATERY_DO_MURZYNKA, TypSprzetuKuchennego.PATERA_DO_CIASTA);
+		return new SpecyfikacjaSprzetuKuchennego(ID_TALERZA_DO_CIASTA, TypSprzetuKuchennego.PATERA_DO_CIASTA);
 	}
 
 	private void ____________POZIOM_ABSTRAKCJI_6____________() {
