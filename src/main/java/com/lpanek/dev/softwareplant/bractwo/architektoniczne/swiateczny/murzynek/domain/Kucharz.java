@@ -63,33 +63,32 @@ public class Kucharz {
 		wymieszajSkladnikiWGarnku(garnek);
 		SprzetKuchenny blaszka = przygotujBlaszkePrzedWylaniemSkladnikow();
 		wylejZmieszaneSkladnikiDoBlaszki(garnek, blaszka);
+		blaszka = upieczMurzynkaWPiekarniku(blaszka);
+		while (murzynekWBlaszceJestCieply(blaszka)) {
+			czekajPrzezDziesiecMinut();
+		}
+		pokrojMurzynkaWBlaszce(blaszka);
+		SprzetKuchenny patera = this.sprzetyKuchenne.wez(ID_PATERY_DO_MURZYNKA);
+		SprzetKuchenny lopatka = this.sprzetyKuchenne.wez(ID_LOPATKI_DO_MURZYNKA);
+		while (nieCalyMurzynekJestPrzeniesionyZBlaszki(blaszka)) {
+			przelozkRzadKawalkowMurzynkaZBlaszkiNaPatere(blaszka, patera, lopatka);
+		}
+		this.sprzetyKuchenne.odloz(lopatka);
+		return new TypWyjsciowy(patera);
+	}
+
+	private void ____________POZIOM_ABSTRAKCJI_2____________() {
+	}
+
+	private SprzetKuchenny upieczMurzynkaWPiekarniku(SprzetKuchenny blaszka) {
 		SprzetKuchenny piekarnik = nastawPiekarnikZMinimalnymCzasemPieczenia();
 		zaczekajNaNagrzaniePiekarnika(piekarnik);
 		wstawBlaszkeDoPiekarnika(blaszka, piekarnik);
 		zaczekajNaSkonczeniePieczenia(piekarnik);
-		if (murzynekJestNiedopieczony(piekarnik)) {
-			nastawDodatkowyCzasPieczeniaPiekarnika(piekarnik);
-			while (murzynekJestNiedopieczony(piekarnik) && piekarnikPiecze(piekarnik)) {
-				czekajPrzezPiecMinut();
-			}
-			if (murzynekJestNiedopieczony(piekarnik)) {
-				zglosProblemZUpieczeniemMurzynkaWPiekarniku();
-			}
-		}
+		dopieczMurzynkaJesliPotrzeba(piekarnik);
 		blaszka = wyjmijBlaszkeZPiekarnika(piekarnik);
 		wylaczPiekarnik(piekarnik);
-		while (murzynekWBlaszceJestCieply(blaszka)) {
-			czekajPrzezDziesiecMinut();
-		}
-		SprzetKuchenny noz = this.sprzetyKuchenne.wez(ID_NOZA_DO_MURZYNKA);
-		while (nieCalyMurzynekWBlaszceJestPokrojonyNaKawalki(blaszka)) {
-			pokrojNaKawalkiRzadMurzynka(blaszka, noz);
-		}
-		this.sprzetyKuchenne.odloz(noz);
-		return przelozMurzynkaZBlaszkiNaPatere(blaszka);
-	}
-
-	private void ____________POZIOM_ABSTRAKCJI_2____________() {
+		return blaszka;
 	}
 
 	private void ____________POZIOM_ABSTRAKCJI_3____________() {
@@ -165,6 +164,20 @@ public class Kucharz {
 		}
 	}
 
+	private void dopieczMurzynkaJesliPotrzeba(SprzetKuchenny piekarnik) {
+		if (murzynekJestDopieczony(piekarnik)) {
+			return;
+		}
+		nastawDodatkowyCzasPieczeniaPiekarnika(piekarnik);
+		while (murzynekJestNiedopieczony(piekarnik) && piekarnikPiecze(piekarnik)) {
+			czekajPrzezPiecMinut();
+		}
+		if (murzynekJestNiedopieczony(piekarnik)) {
+			// TODO: Potrzebna obługa tego problemu
+			zglosProblemZUpieczeniemMurzynkaWPiekarniku();
+		}
+	}
+
 	private SprzetKuchenny wyjmijBlaszkeZPiekarnika(SprzetKuchenny piekarnik) {
 		otworzPiekarnik(piekarnik);
 		SprzetKuchenny blaszka = wyjmijBlaszkeZOtwartegoPiekarnika(piekarnik);
@@ -178,14 +191,12 @@ public class Kucharz {
 		nastawCzasPieczeniaPiekarnika(piekarnik, CzasPieczeniaPiekarnika.ZERO);
 	}
 
-	private TypWyjsciowy przelozMurzynkaZBlaszkiNaPatere(SprzetKuchenny blaszka) {
-		SprzetKuchenny patera = sprzetyKuchenne.wez(ID_PATERY_DO_MURZYNKA);
-		SprzetKuchenny lopatka = sprzetyKuchenne.wez(ID_LOPATKI_DO_MURZYNKA);
-		while (nieCalyMurzynekJestPrzeniesionyZBlaszki(blaszka)) {
-			przelozkRzadKawalkowMurzynkaZBlaszkiNaPatere(blaszka, patera, lopatka);
+	private void pokrojMurzynkaWBlaszce(SprzetKuchenny blaszka) {
+		SprzetKuchenny noz = sprzetyKuchenne.wez(ID_NOZA_DO_MURZYNKA);
+		while (nieCalyMurzynekWBlaszceJestPokrojonyNaKawalki(blaszka)) {
+			pokrojNaKawalkiRzadMurzynka(blaszka, noz);
 		}
-		sprzetyKuchenne.odloz(lopatka);
-		return new TypWyjsciowy(patera);
+		sprzetyKuchenne.odloz(noz);
 	}
 
 	private void ____________POZIOM_ABSTRAKCJI_4____________() {
@@ -292,6 +303,10 @@ public class Kucharz {
 
 	private boolean piekarnikPiecze(SprzetKuchenny piekarnik) {
 		return false;
+	}
+
+	private boolean murzynekJestDopieczony(SprzetKuchenny piekarnik) {
+		return true;
 	}
 
 	private boolean murzynekJestNiedopieczony(SprzetKuchenny piekarnik) {
