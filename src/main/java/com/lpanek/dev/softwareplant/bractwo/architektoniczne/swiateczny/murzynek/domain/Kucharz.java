@@ -59,12 +59,12 @@ public class Kucharz {
 		zaczekajNaNagrzaniePiekarnika(piekarnik);
 		wstawBlaszkeDoPiekarnika(blaszka, piekarnik);
 		zaczekajNaSkonczeniePieczenia(piekarnik);
-		dopieczMurzynkaJesliPotrzeba(piekarnik);
+		dopieczCiastoJesliPotrzeba(piekarnik);
 		blaszka = wyjmijBlaszkeZPiekarnika(piekarnik);
 		wylaczPiekarnik(piekarnik);
-		zaczekajNaOstygniecieMurzynka(blaszka);
-		pokrojMurzynkaWBlaszce(blaszka);
-		return przelozMurzynkaZBlaszkiNaPatere(blaszka);
+		zaczekajNaOstygniecieCiasta(blaszka);
+		pokrojCiastoWBlaszce(blaszka);
+		return przelozCiastoZBlaszkiNaTalerz(blaszka);
 	}
 
 	private void ____________POZIOM_ABSTRAKCJI_2____________() {
@@ -155,7 +155,7 @@ public class Kucharz {
 		}
 	}
 
-	private void dopieczMurzynkaJesliPotrzeba(SprzetKuchenny piekarnik) {
+	private void dopieczCiastoJesliPotrzeba(SprzetKuchenny piekarnik) {
 		if (murzynekJestDopieczony(piekarnik)) {
 			return;
 		}
@@ -182,13 +182,13 @@ public class Kucharz {
 		nastawCzasPieczeniaPiekarnika(piekarnik, CzasPieczeniaPiekarnika.ZERO);
 	}
 
-	private void zaczekajNaOstygniecieMurzynka(SprzetKuchenny blaszka) {
+	private void zaczekajNaOstygniecieCiasta(SprzetKuchenny blaszka) {
 		while (murzynekWBlaszceJestCieply(blaszka)) {
 			czekajPrzezDziesiecMinut();
 		}
 	}
 
-	private void pokrojMurzynkaWBlaszce(SprzetKuchenny blaszka) {
+	private void pokrojCiastoWBlaszce(SprzetKuchenny blaszka) {
 		SprzetKuchenny noz = sprzetyKuchenne.wez(ID_NOZA_DO_MURZYNKA);
 		while (nieCalyMurzynekWBlaszceJestPokrojonyNaKawalki(blaszka)) {
 			pokrojNaKawalkiRzadMurzynka(blaszka, noz);
@@ -196,7 +196,7 @@ public class Kucharz {
 		sprzetyKuchenne.odloz(noz);
 	}
 
-	private TypWyjsciowy przelozMurzynkaZBlaszkiNaPatere(SprzetKuchenny blaszka) {
+	private TypWyjsciowy przelozCiastoZBlaszkiNaTalerz(SprzetKuchenny blaszka) {
 		SprzetKuchenny patera = sprzetyKuchenne.wez(ID_PATERY_DO_MURZYNKA);
 		SprzetKuchenny lopatka = sprzetyKuchenne.wez(ID_LOPATKI_DO_MURZYNKA);
 		while (nieCalyMurzynekJestPrzeniesionyZBlaszki(blaszka)) {
